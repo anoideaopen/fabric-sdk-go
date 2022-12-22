@@ -180,7 +180,7 @@ func BroadcastPayload(reqCtx reqContext.Context, payload *common.Payload, ordere
 	return broadcastEnvelope(reqCtx, envelope, orderers)
 }
 
-// broadcastEnvelope will send the given envelope to some orderer, picking random endpoints
+// broadcastEnvelopeRaft will send the given envelope to some orderer, picking random endpoints
 // until all are exhausted
 func broadcastEnvelope(reqCtx reqContext.Context, envelope *fab.SignedEnvelope, orderers []fab.Orderer) (*fab.TransactionResponse, error) {
 	// Check if orderers are defined
