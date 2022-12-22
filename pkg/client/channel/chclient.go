@@ -17,6 +17,7 @@ package channel
 
 import (
 	reqContext "context"
+	"reflect"
 	"time"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke"
@@ -25,12 +26,15 @@ import (
 	selectopts "github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
+	"github.com/hyperledger/fabric-sdk-go/pkg/common/logging"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	contextImpl "github.com/hyperledger/fabric-sdk-go/pkg/context"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/metrics"
 	"github.com/pkg/errors"
 )
+
+var logger = logging.NewLogger("pfi/pfi")
 
 // Client enables access to a channel on a Fabric network.
 //
@@ -145,6 +149,7 @@ func addDefaultTimeout(tt fab.TimeoutType) RequestOption {
 //	Returns:
 //	the proposal responses from peer(s)
 func (cc *Client) InvokeHandler(handler invoke.Handler, request Request, options ...RequestOption) (Response, error) {
+	start := time.Now()
 	// Read execute tx options
 	txnOpts, err := cc.prepareOptsFromOptions(cc.context, options...)
 	if err != nil {
@@ -189,6 +194,10 @@ func (cc *Client) InvokeHandler(handler invoke.Handler, request Request, options
 	}()
 	select {
 	case <-complete:
+		end := float32(time.Since(start)/1000) / 1000
+		logger.Infof("pfi InvokeHandler time %s dur %f id %s type %s",
+			start.Format(time.RFC3339Nano), end,
+			requestContext.Response.TransactionID, reflect.TypeOf(handler).String())
 		return Response(requestContext.Response), requestContext.Error
 	case <-reqCtx.Done():
 		return Response{}, status.New(status.ClientStatus, status.Timeout.ToInt32(),

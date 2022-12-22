@@ -7,15 +7,19 @@ SPDX-License-Identifier: Apache-2.0
 package gateway
 
 import (
-	"github.com/hyperledger/fabric-protos-go-apiv2/peer"
+	"time"
 
+	"github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
+	"github.com/hyperledger/fabric-sdk-go/pkg/common/logging"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/pkg/errors"
 )
+
+var logger = logging.NewLogger("pfi/pfi")
 
 // A Transaction represents a specific invocation of a transaction function, and provides
 // flexibility over how that transaction is invoked. Applications should
@@ -171,6 +175,7 @@ type commitTxHandler struct {
 
 // Handle handles commit tx
 func (c *commitTxHandler) Handle(requestContext *invoke.RequestContext, clientContext *invoke.ClientContext) {
+	start := time.Now()
 	txnID := requestContext.Response.TransactionID
 
 	//Register Tx event
@@ -185,6 +190,8 @@ func (c *commitTxHandler) Handle(requestContext *invoke.RequestContext, clientCo
 		requestContext.Error = errors.Wrap(err, "CreateAndSendTransaction failed")
 		return
 	}
+
+	send := time.Since(start)
 
 	select {
 	case txStatus := <-statusNotifier:
@@ -205,6 +212,13 @@ func (c *commitTxHandler) Handle(requestContext *invoke.RequestContext, clientCo
 			"Execute didn't receive block event", nil)
 		return
 	}
+
+	send1 := float32(send/1000) / 1000
+	end := float32((time.Since(start)-send)/1000) / 1000
+	logger.Infof("pfi commitTxHandler time %s send_dur %f wait_dur %f id %s",
+		start.Format(time.RFC3339Nano), send1, end,
+		requestContext.Response.TransactionID)
+
 }
 
 func createAndSendTransaction(sender fab.Sender, proposal *fab.TransactionProposal, resps []*fab.TransactionProposalResponse) (*fab.TransactionResponse, error) {
