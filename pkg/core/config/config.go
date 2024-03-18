@@ -141,10 +141,11 @@ func newBackend(opts ...Option) (*defConfigBackend, error) {
 }
 
 func newViper(cmdRootPrefix string) *viper.Viper {
-	myViper := viper.New()
+	delim := "@#@"
+	myViper := viper.NewWithOptions(viper.KeyDelimiter(delim))
 	myViper.SetEnvPrefix(cmdRootPrefix)
 	myViper.AutomaticEnv()
-	replacer := strings.NewReplacer(".", "_")
+	replacer := strings.NewReplacer(delim, "_")
 	myViper.SetEnvKeyReplacer(replacer)
 	return myViper
 }
