@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-module github.com/hyperledger/fabric-sdk-go
+module github.com/anoideaopen/fabric-sdk-go
 
 go 1.18
 
