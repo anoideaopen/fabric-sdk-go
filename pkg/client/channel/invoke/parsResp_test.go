@@ -10,7 +10,6 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/rwsetutil"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/protoutil"
 	"github.com/stretchr/testify/assert"
-	fproto "gitlab.n-t.io/atmz/foundation/proto"
 )
 
 var (
@@ -30,11 +29,11 @@ func TestParsing(t *testing.T) {
 	assert.NoError(t, err2)
 
 	if !bytes.Equal(BatchResponseByte1, BatchResponseByte2) {
-		out1 := &fproto.BatchResponse{}
+		out1 := &BatchResponsePFI{}
 		err1 = prt.Unmarshal(BatchResponseByte1, out1)
 		assert.NoError(t, err1)
 
-		out2 := &fproto.BatchResponse{}
+		out2 := &BatchResponsePFI{}
 		err2 = prt.Unmarshal(BatchResponseByte2, out2)
 		assert.NoError(t, err2)
 

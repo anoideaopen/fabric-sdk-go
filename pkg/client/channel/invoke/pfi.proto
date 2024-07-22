@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package invoke;
+
+option go_package = ".";
+
+message MultiSwapPFI {
+    bytes id      = 1;
+    bytes creator = 2;
+    bytes owner   = 3;
+    string token  = 4;
+    string from   = 5;
+    string to     = 6;
+    bytes hash    = 7;
+    int64 timeout = 8;
+    repeated AssetPFI assets = 9;
+}
+
+message AssetPFI {
+    string group  = 1;
+    bytes amount  = 2;
+}
+
+message SwapPFI {
+    bytes id      = 1;
+    bytes creator = 2;
+    bytes owner   = 3;
+    string token  = 4;
+    bytes amount  = 5;
+    string from   = 6;
+    string to     = 7;
+    bytes hash    = 8;
+    int64 timeout = 9;
+}
+
+message WriteElementPFI {
+    string key       = 1;
+    bytes value     = 2;
+    bool is_deleted = 3;
+}
+
+message ResponseErrorPFI {
+    int32 code   = 1;
+    string error = 2;
+}
+
+message SwapResponsePFI {
+    bytes id                     = 1;
+    ResponseErrorPFI error          = 2;
+    repeated WriteElementPFI writes = 3;
+}
+
+message TxResponsePFI {
+    bytes id                     = 1;
+    string method                = 2;
+    ResponseErrorPFI error          = 3;
+    repeated WriteElementPFI writes = 4;
+}
+
+message BatchResponsePFI {
+    repeated TxResponsePFI tx_responses         = 1;
+    repeated SwapPFI created_swaps              = 2;
+    repeated SwapResponsePFI swap_responses     = 3;
+    repeated SwapResponsePFI swap_key_responses = 4;
+    repeated MultiSwapPFI created_multi_swap = 5;
+}
