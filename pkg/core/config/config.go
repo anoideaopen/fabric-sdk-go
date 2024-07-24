@@ -29,6 +29,7 @@ type options struct {
 
 const (
 	cmdRoot = "FABRIC_SDK"
+	delim   = "@#@"
 )
 
 // Option configures the package.
@@ -141,7 +142,6 @@ func newBackend(opts ...Option) (*defConfigBackend, error) {
 }
 
 func newViper(cmdRootPrefix string) *viper.Viper {
-	delim := "@#@"
 	myViper := viper.NewWithOptions(viper.KeyDelimiter(delim))
 	myViper.SetEnvPrefix(cmdRootPrefix)
 	myViper.AutomaticEnv()
