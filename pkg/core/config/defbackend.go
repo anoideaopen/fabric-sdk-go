@@ -7,6 +7,8 @@ SPDX-License-Identifier: Apache-2.0
 package config
 
 import (
+	"strings"
+
 	"github.com/hyperledger/fabric-sdk-go/pkg/util/pathvar"
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
@@ -20,6 +22,7 @@ type defConfigBackend struct {
 
 // Lookup gets the config item value by Key
 func (c *defConfigBackend) Lookup(key string) (interface{}, bool) {
+	key = strings.Replace(key, ".", delim, -1)
 	value := c.configViper.Get(key)
 	if value == nil {
 		return nil, false
