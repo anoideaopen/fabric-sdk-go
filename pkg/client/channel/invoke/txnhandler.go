@@ -8,20 +8,20 @@ package invoke
 
 import (
 	"bytes"
+	"encoding/base64"
 	"strings"
 	"time"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
-	"github.com/hyperledger/fabric-sdk-go/pkg/common/options"
-	"github.com/pkg/errors"
-
 	"github.com/hyperledger/fabric-protos-go/common"
 	pb "github.com/hyperledger/fabric-protos-go/peer"
 	selectopts "github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options"
+	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
+	"github.com/hyperledger/fabric-sdk-go/pkg/common/options"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/txn"
+	"github.com/pkg/errors"
 )
 
 // TxnHeaderOptsProvider provides transaction header options which allow
@@ -169,19 +169,54 @@ func (f *EndorsementValidationHandler) Handle(requestContext *RequestContext, cl
 }
 
 func (f *EndorsementValidationHandler) validate(txProposalResponse []*fab.TransactionProposalResponse) error {
-	var a1 *pb.ProposalResponse
+	var (
+		a1         *pb.ProposalResponse
+		a1Endorser string
+	)
 	for n, r := range txProposalResponse {
 		response := r.ProposalResponse.GetResponse()
-		if response.Status < int32(common.Status_SUCCESS) || response.Status >= int32(common.Status_BAD_REQUEST) {
+		if response.GetStatus() < int32(common.Status_SUCCESS) ||
+			response.GetStatus() >= int32(common.Status_BAD_REQUEST) {
 			return status.NewFromProposalResponse(r.ProposalResponse, r.Endorser)
 		}
 		if n == 0 {
 			a1 = r.ProposalResponse
+			a1Endorser = r.Endorser
 			continue
 		}
 
-		if !bytes.Equal(a1.Payload, r.ProposalResponse.Payload) ||
-			!bytes.Equal(a1.GetResponse().Payload, response.Payload) {
+		if !bytes.Equal(a1.GetPayload(), r.ProposalResponse.GetPayload()) ||
+			!bytes.Equal(a1.GetResponse().GetPayload(), response.GetPayload()) {
+			logger.Infof(
+				"EndorsementMismatch1 endorser1 - %s, endorser2 - %s",
+				a1Endorser,
+				r.Endorser,
+			)
+
+			if !bytes.Equal(a1.GetPayload(), r.ProposalResponse.GetPayload()) {
+				logger.Infof(
+					"EndorsementMismatch ChaincodeAction 1 - %s",
+					base64.StdEncoding.EncodeToString(a1.GetPayload()),
+				)
+
+				logger.Infof(
+					"EndorsementMismatch ChaincodeAction 2 - %s",
+					base64.StdEncoding.EncodeToString(r.ProposalResponse.GetPayload()),
+				)
+			}
+
+			if !bytes.Equal(a1.GetResponse().GetPayload(), response.GetPayload()) {
+				logger.Infof(
+					"EndorsementMismatch Response.Payload 1 - %s",
+					base64.StdEncoding.EncodeToString(a1.GetResponse().Payload),
+				)
+
+				logger.Infof(
+					"EndorsementMismatch Response.Payload 2 - %s",
+					base64.StdEncoding.EncodeToString(response.Payload),
+				)
+			}
+
 			return status.New(status.EndorserClientStatus, status.EndorsementMismatch.ToInt32(),
 				"ProposalResponsePayloads do not match", nil)
 		}
