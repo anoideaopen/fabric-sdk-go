@@ -170,49 +170,49 @@ func (f *EndorsementValidationHandler) Handle(requestContext *RequestContext, cl
 
 func (f *EndorsementValidationHandler) validate(txProposalResponse []*fab.TransactionProposalResponse) error {
 	var (
-		a1  *pb.ProposalResponse
-		a1e string
+		a1         *pb.ProposalResponse
+		a1Endorser string
 	)
 	for n, r := range txProposalResponse {
 		response := r.ProposalResponse.GetResponse()
-		if response.Status < int32(common.Status_SUCCESS) || response.Status >= int32(common.Status_BAD_REQUEST) {
+		if response.GetStatus() < int32(common.Status_SUCCESS) ||
+			response.GetStatus() >= int32(common.Status_BAD_REQUEST) {
 			return status.NewFromProposalResponse(r.ProposalResponse, r.Endorser)
 		}
 		if n == 0 {
 			a1 = r.ProposalResponse
-			a1e = r.Endorser
-
+			a1Endorser = r.Endorser
 			continue
 		}
 
-		if !bytes.Equal(a1.Payload, r.ProposalResponse.Payload) ||
-			!bytes.Equal(a1.GetResponse().Payload, response.Payload) {
+		if !bytes.Equal(a1.GetPayload(), r.ProposalResponse.GetPayload()) ||
+			!bytes.Equal(a1.GetResponse().GetPayload(), response.GetPayload()) {
 			logger.Infof(
-				"PFI1 endorser1 - %s, endorser2 - %s",
-				a1e,
+				"EndorsementMismatch1 endorser1 - %s, endorser2 - %s",
+				a1Endorser,
 				r.Endorser,
 			)
 
-			if !bytes.Equal(a1.Payload, r.ProposalResponse.Payload) {
+			if !bytes.Equal(a1.GetPayload(), r.ProposalResponse.GetPayload()) {
 				logger.Infof(
-					"PFI1 ChaincodeAction 1 - %s",
-					base64.StdEncoding.EncodeToString(a1.Payload),
+					"EndorsementMismatch ChaincodeAction 1 - %s",
+					base64.StdEncoding.EncodeToString(a1.GetPayload()),
 				)
 
 				logger.Infof(
-					"PFI1 ChaincodeAction 2 - %s",
-					base64.StdEncoding.EncodeToString(r.ProposalResponse.Payload),
+					"EndorsementMismatch ChaincodeAction 2 - %s",
+					base64.StdEncoding.EncodeToString(r.ProposalResponse.GetPayload()),
 				)
 			}
 
-			if !bytes.Equal(a1.GetResponse().Payload, response.Payload) {
+			if !bytes.Equal(a1.GetResponse().GetPayload(), response.GetPayload()) {
 				logger.Infof(
-					"PFI1 BatchResponse 1 - %s",
+					"EndorsementMismatch Response.Payload 1 - %s",
 					base64.StdEncoding.EncodeToString(a1.GetResponse().Payload),
 				)
 
 				logger.Infof(
-					"PFI1 BatchResponse 2 - %s",
+					"EndorsementMismatch Response.Payload 2 - %s",
 					base64.StdEncoding.EncodeToString(response.Payload),
 				)
 			}
