@@ -8,7 +8,7 @@ package main
 
 import (
 	"github.com/hyperledger/fabric-chaincode-go/shim"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 )
 
 // GolangCC is a sample chaincode written in Go

@@ -7,10 +7,10 @@ SPDX-License-Identifier: Apache-2.0
 package resource
 
 import (
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 const (
@@ -19,7 +19,7 @@ const (
 	csccChannels    = "GetChannels"
 )
 
-func createJoinChannelInvokeRequest(genesisBlock *common.Block) (fab.ChaincodeInvokeRequest, error) { //nolint
+func createJoinChannelInvokeRequest(genesisBlock *common.Block) (fab.ChaincodeInvokeRequest, error) { // nolint
 
 	genesisBlockBytes, err := proto.Marshal(genesisBlock)
 	if err != nil {

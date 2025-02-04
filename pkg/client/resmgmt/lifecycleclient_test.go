@@ -11,10 +11,10 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/golang/protobuf/proto"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
-	lb "github.com/hyperledger/fabric-protos-go/peer/lifecycle"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
+	lb "github.com/hyperledger/fabric-protos-go-apiv2/peer/lifecycle"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/protobuf/proto"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	lifecyclepkg "github.com/hyperledger/fabric-sdk-go/pkg/fab/ccpackager/lifecycle"
@@ -841,7 +841,7 @@ func TestClient_LifecycleQueryCommittedCC(t *testing.T) {
 	lcDefsBytes, err := proto.Marshal(lcDefs)
 	require.NoError(t, err)
 
-	//this result is used to test a case when peers return list of definitions in unexpected order
+	// this result is used to test a case when peers return list of definitions in unexpected order
 	lcDefsInDifferentOrder := &lb.QueryChaincodeDefinitionsResult{
 		ChaincodeDefinitions: []*lb.QueryChaincodeDefinitionsResult_ChaincodeDefinition{
 			{Name: cc2, Sequence: 2, Version: v1, ValidationParameter: policyBytes},

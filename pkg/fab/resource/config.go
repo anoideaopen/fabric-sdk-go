@@ -7,10 +7,10 @@ SPDX-License-Identifier: Apache-2.0
 package resource
 
 import (
-	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/crypto"
 	fcutils "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/util"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
@@ -38,8 +38,9 @@ func CreateConfigSignature(ctx context.Client, config []byte) (*common.ConfigSig
 }
 
 // ConfigSignatureData holds data ready to be signed (SigningBytes) + Signature Header
-//    When building the common.ConfigSignature instance with the signed SigningBytes from the external tool,
-//    assign the returned ConfigSignatureData.SignatureHeader as part of the new ConfigSignature instance.
+//
+//	When building the common.ConfigSignature instance with the signed SigningBytes from the external tool,
+//	assign the returned ConfigSignatureData.SignatureHeader as part of the new ConfigSignature instance.
 type ConfigSignatureData struct {
 	SignatureHeader      common.SignatureHeader
 	SignatureHeaderBytes []byte
@@ -136,7 +137,7 @@ func CreateConfigEnvelope(data []byte) (*common.ConfigEnvelope, error) {
 	return configEnvelope, nil
 }
 
-//CreateConfigUpdateEnvelope creates configuration update envelope proto
+// CreateConfigUpdateEnvelope creates configuration update envelope proto
 func CreateConfigUpdateEnvelope(data []byte) (*common.ConfigUpdateEnvelope, error) {
 
 	envelope := &common.Envelope{}

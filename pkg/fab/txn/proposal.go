@@ -10,11 +10,11 @@ import (
 	reqContext "context"
 	"sync"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 
-	"github.com/hyperledger/fabric-protos-go/common"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/protoutil"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/multi"
 	contextApi "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
@@ -118,7 +118,7 @@ func SendProposal(reqCtx reqContext.Context, proposal *fab.TransactionProposal, 
 			defer wg.Done()
 
 			// TODO: The RPC should be timed-out.
-			//resp, err := processor.ProcessTransactionProposal(context.NewRequestOLD(ctx), request)
+			// resp, err := processor.ProcessTransactionProposal(context.NewRequestOLD(ctx), request)
 			resp, err := processor.ProcessTransactionProposal(reqCtx, request)
 			if err != nil {
 				logger.Debugf("Received error response from txn proposal processing: %s", err)

@@ -10,12 +10,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/resource"
 
 	"time"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	contextImpl "github.com/hyperledger/fabric-sdk-go/pkg/context"
@@ -24,6 +23,7 @@ import (
 	mspmocks "github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp"
 	"github.com/hyperledger/fabric-sdk-go/test/metadata"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 
 	"strings"
 
@@ -93,7 +93,7 @@ func TestChannelConfigWithPeerWithRetries(t *testing.T) {
 	chConfig := &fab.ChannelEndpointConfig{
 		Policies: fab.ChannelPolicies{QueryChannelConfig: fab.QueryChannelConfigPolicy{
 			MinResponses: 2,
-			MaxTargets:   1, //Ignored since we pass targets
+			MaxTargets:   1, // Ignored since we pass targets
 			RetryOpts:    defRetryOpts,
 		}},
 	}
@@ -112,7 +112,7 @@ func TestChannelConfigWithPeerWithRetries(t *testing.T) {
 	// Test QueryBlock
 	// ---------------
 
-	//Set custom retry handler for tracking number of attempts
+	// Set custom retry handler for tracking number of attempts
 	queryBlockRetryHandler := retry.New(defRetryOpts)
 	overrideRetryHandler = &customRetryHandler{handler: queryBlockRetryHandler, retries: 0}
 
@@ -129,7 +129,7 @@ func TestChannelConfigWithPeerWithRetries(t *testing.T) {
 	// Test Query
 	// ----------
 
-	//Set custom retry handler for tracking number of attempts
+	// Set custom retry handler for tracking number of attempts
 	retryHandler := retry.New(defRetryOpts)
 	overrideRetryHandler = &customRetryHandler{handler: retryHandler, retries: 0}
 
@@ -216,14 +216,14 @@ func TestRandomMaxTargetsSelections(t *testing.T) {
 	for _, v := range responseTargets {
 		after = after + v.(*mockProposalProcessor).name
 	}
-	//make sure it is random
+	// make sure it is random
 	assert.False(t, before == after, "response targets are not random")
 
-	max = 0 //when zero minimum supplied, result should be empty
+	max = 0 // when zero minimum supplied, result should be empty
 	responseTargets = randomMaxTargets(testTargets, max)
 	assert.True(t, responseTargets != nil && len(responseTargets) == max, "response target not as expected")
 
-	max = 12 //greater than targets length
+	max = 12 // greater than targets length
 	responseTargets = randomMaxTargets(testTargets, max)
 	assert.True(t, responseTargets != nil && len(responseTargets) == len(testTargets), "response target not as expected")
 
@@ -272,7 +272,7 @@ func TestResolveOptsFromConfig(t *testing.T) {
 	assert.True(t, channelConfig.opts.RetryOpts.RetryableCodes != nil, "supposed to be loaded once opts resolved from config")
 	assert.True(t, mockConfig.called, "config.ChannelConfig() not used by resolve opts function")
 
-	//Try again, opts shouldnt get reloaded from config once loaded
+	// Try again, opts shouldnt get reloaded from config once loaded
 	mockConfig.called = false
 	channelConfig.resolveOptsFromConfig(ctx)
 	assert.False(t, mockConfig.called, "config.ChannelConfig() should not be used by resolve opts function once opts are loaded")
@@ -283,7 +283,7 @@ func TestResolveOptsDefaultValues(t *testing.T) {
 }
 
 func TestResolveOptsDefaultValuesWithInvalidChannel(t *testing.T) {
-	//Should be successful even with invalid channel id
+	// Should be successful even with invalid channel id
 	testResolveOptsDefaultValues(t, "INVALID-CHANNEL-ID")
 }
 
@@ -392,7 +392,7 @@ func getPeerWithConfigBlockPayload(t *testing.T, peerURL string) fab.Peer {
 	return peer
 }
 
-//mockProposalProcessor to mock proposal processor for random max target test
+// mockProposalProcessor to mock proposal processor for random max target test
 type mockProposalProcessor struct {
 	name string
 }
@@ -401,7 +401,7 @@ func (pp *mockProposalProcessor) ProcessTransactionProposal(reqCtx reqContext.Co
 	return nil, errors.New("not implemented, just mock")
 }
 
-//customMockConfig to mock config to override channel configuration options
+// customMockConfig to mock config to override channel configuration options
 type customMockConfig struct {
 	*mocks.MockConfig
 	chConfig *fab.ChannelEndpointConfig
@@ -413,7 +413,7 @@ func (c *customMockConfig) ChannelConfig(name string) *fab.ChannelEndpointConfig
 	return c.chConfig
 }
 
-//customRetryHandler is wrapper around retry handler which keeps count of attempts for unit-testing
+// customRetryHandler is wrapper around retry handler which keeps count of attempts for unit-testing
 type customRetryHandler struct {
 	handler retry.Handler
 	retries int

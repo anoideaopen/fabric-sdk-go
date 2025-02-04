@@ -11,7 +11,7 @@ Please review third_party pinning scripts and patches for more details.
 package capabilities
 
 import (
-	cb "github.com/hyperledger/fabric-protos-go/common"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
 )
 
 const (
@@ -112,8 +112,8 @@ func (ap *ApplicationProvider) V1_3Validation() bool {
 
 // V2_0Validation returns true if this channel supports transaction validation
 // as introduced in v2.0. This includes:
-//  - new chaincode lifecycle
-//  - implicit per-org collections
+//   - new chaincode lifecycle
+//   - implicit per-org collections
 func (ap *ApplicationProvider) V2_0Validation() bool {
 	return ap.v20
 }

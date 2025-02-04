@@ -9,10 +9,10 @@ package resmgmt
 import (
 	"testing"
 
-	"github.com/golang/protobuf/proto"
-	lb "github.com/hyperledger/fabric-protos-go/peer/lifecycle"
+	lb "github.com/hyperledger/fabric-protos-go-apiv2/peer/lifecycle"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestUnmarshalInOrderCCDefResults(t *testing.T) {
@@ -29,7 +29,7 @@ func TestUnmarshalInOrderCCDefResults(t *testing.T) {
 			ChaincodeDefinitions: []*lb.QueryChaincodeDefinitionsResult_ChaincodeDefinition{},
 		}
 
-		//set cc definitions in reversed order
+		// set cc definitions in reversed order
 		for i := len(aCCDefRes.ChaincodeDefinitions) - 1; i >= 0; i-- {
 			bCCDefRes.ChaincodeDefinitions = append(bCCDefRes.ChaincodeDefinitions, aCCDefRes.ChaincodeDefinitions[i])
 		}

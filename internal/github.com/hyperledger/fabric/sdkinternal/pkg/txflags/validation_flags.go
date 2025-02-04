@@ -11,7 +11,7 @@ Please review third_party pinning scripts and patches for more details.
 package txflags
 
 import (
-	"github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/peer"
 )
 
 // ValidationFlags is array of transaction validation codes. It is used when committer validates block.

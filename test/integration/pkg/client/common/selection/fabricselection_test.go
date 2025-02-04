@@ -1,3 +1,4 @@
+//go:build !prev
 // +build !prev
 
 /*
@@ -17,7 +18,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/fabricselection"
 	selectionopts "github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/options"

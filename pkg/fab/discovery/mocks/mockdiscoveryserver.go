@@ -10,10 +10,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/discovery"
-	"github.com/hyperledger/fabric-protos-go/gossip"
+	"github.com/hyperledger/fabric-protos-go-apiv2/discovery"
+	"github.com/hyperledger/fabric-protos-go-apiv2/gossip"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 // MockDiscoveryServer is a mock Discovery server

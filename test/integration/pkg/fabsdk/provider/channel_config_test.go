@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/resource"
 
@@ -36,7 +36,7 @@ func TestChannelConfig(t *testing.T) {
 	sdk := mainSDK
 	testSetup := mainTestSetup
 
-	//prepare contexts
+	// prepare contexts
 	org1ChannelClientContext := sdk.ChannelContext(testSetup.ChannelID, fabsdk.WithUser(org1User), fabsdk.WithOrg(org1Name))
 
 	channelCtx, err := org1ChannelClientContext()
@@ -129,7 +129,7 @@ func TestChannelConfigWithOrderer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	//prepare contexts
+	// prepare contexts
 	org1ChannelClientContext := sdk.ChannelContext(testSetup.ChannelID, fabsdk.WithUser(org1User), fabsdk.WithOrg(org1Name))
 
 	channelCtx, err := org1ChannelClientContext()
@@ -214,7 +214,7 @@ func (f *ChannelConfigFromOrdererProviderFactory) CreateInfraProvider(config fab
 
 func setupOrderer(t *testing.T, endPointConfig fab.EndpointConfig, address string) fab.Orderer {
 
-	//Get orderer config by orderer address
+	// Get orderer config by orderer address
 	oCfg, ok, _ := endPointConfig.OrdererConfig(resolveOrdererAddress(address))
 	require.True(t, ok)
 

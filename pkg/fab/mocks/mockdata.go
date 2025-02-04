@@ -9,13 +9,13 @@ package mocks
 import (
 	"crypto/sha256"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/golang/protobuf/ptypes/timestamp"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/hyperledger/fabric-protos-go/common"
-	mb "github.com/hyperledger/fabric-protos-go/msp"
-	ab "github.com/hyperledger/fabric-protos-go/orderer"
-	pp "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	mb "github.com/hyperledger/fabric-protos-go-apiv2/msp"
+	ab "github.com/hyperledger/fabric-protos-go-apiv2/orderer"
+	pp "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	cutil "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/util"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/protoutil"
 
@@ -94,10 +94,11 @@ func (b *MockConfigBlockBuilder) Build() *common.Block {
 }
 
 // buildBlockMetadata builds BlockMetadata that contains an array of bytes in the following order:
-// 	0: SIGNATURES
-// 	1: LAST_CONFIG
-// 	2: TRANSACTIONS_FILTER
-// 	3: ORDERER
+//
+//	0: SIGNATURES
+//	1: LAST_CONFIG
+//	2: TRANSACTIONS_FILTER
+//	3: ORDERER
 func (b *MockConfigBlockBuilder) buildBlockMetadata() *common.BlockMetadata {
 	return &common.BlockMetadata{
 		Metadata: [][]byte{
@@ -497,7 +498,7 @@ func CreateBlockWithCCEventAndTxStatus(events *pp.ChaincodeEvent, txID string,
 	chdr := &common.ChannelHeader{
 		Type:    int32(common.HeaderType_ENDORSER_TRANSACTION),
 		Version: 1,
-		Timestamp: &timestamp.Timestamp{
+		Timestamp: &timestamppb.Timestamp{
 			Seconds: time.Now().Unix(),
 			Nanos:   0,
 		},

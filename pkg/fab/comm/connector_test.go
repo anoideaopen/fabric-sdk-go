@@ -14,7 +14,7 @@ import (
 	"time"
 	"unsafe"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -291,7 +291,7 @@ func TestConnectorConcurrentSweep(t *testing.T) {
 		default:
 		}
 
-		//Sleeping to wait for sweep
+		// Sleeping to wait for sweep
 		time.Sleep(shortIdleTime)
 	}
 }

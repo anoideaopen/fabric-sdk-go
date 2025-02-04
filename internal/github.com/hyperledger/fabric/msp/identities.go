@@ -23,12 +23,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/msp"
+	"github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	bccsp "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/cryptosuitebridge"
 	flogging "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/logbridge"
 	logging "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/logbridge"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 var mspIdentityLogger = flogging.MustGetLogger("msp.identity")
@@ -224,7 +224,7 @@ type signingidentity struct {
 }
 
 func newSigningIdentity(cert *x509.Certificate, pk core.Key, signer crypto.Signer, msp *bccspmsp) (SigningIdentity, error) {
-	//mspIdentityLogger.Infof("Creating signing identity instance for ID %s", id)
+	// mspIdentityLogger.Infof("Creating signing identity instance for ID %s", id)
 	mspId, err := newIdentity(cert, pk, msp)
 	if err != nil {
 		return nil, err
@@ -242,7 +242,7 @@ func newSigningIdentity(cert *x509.Certificate, pk core.Key, signer crypto.Signe
 
 // Sign produces a signature over msg, signed by this instance
 func (id *signingidentity) Sign(msg []byte) ([]byte, error) {
-	//mspIdentityLogger.Infof("Signing message")
+	// mspIdentityLogger.Infof("Signing message")
 
 	// Compute Hash
 	hashOpt, err := id.getHashOpt(id.msp.cryptoConfig.SignatureHashFamily)

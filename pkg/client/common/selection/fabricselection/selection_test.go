@@ -1,3 +1,4 @@
+//go:build testing
 // +build testing
 
 /*
@@ -14,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hyperledger/fabric-protos-go/gossip"
+	"github.com/hyperledger/fabric-protos-go-apiv2/gossip"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/balancer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options"

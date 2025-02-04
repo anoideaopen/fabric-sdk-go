@@ -10,8 +10,8 @@ import (
 	"io"
 	"sync"
 
-	cb "github.com/hyperledger/fabric-protos-go/common"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/mocks"
 	"github.com/hyperledger/fabric-sdk-go/pkg/util/test"
 	"github.com/pkg/errors"
@@ -27,7 +27,7 @@ type MockDeliverServer struct {
 	//       the same for mock endorser server, it should either call NewMockDeliverServerWithDeliveries or NewMockDeliverServerWithFilteredDeliveries
 	//       to get a new instance of MockDeliverServer
 
-	//for mocking communication with a mockBroadCastServer, this channel will receive common blocks sent by that mockBroadcastServer
+	// for mocking communication with a mockBroadCastServer, this channel will receive common blocks sent by that mockBroadcastServer
 	deliveries <-chan *cb.Block
 
 	// for mocking communcation with mockBroadCastServer, this channel will received filtered blocks sent by that mockBradcastServer
@@ -181,7 +181,7 @@ func (s *MockDeliverServer) handleEvents(srv pb.Deliver_DeliverServer, disconnec
 		select {
 		case block, ok := <-s.deliveries:
 			if ok {
-				//test.Logf("handling block event:[%+v]", block)
+				// test.Logf("handling block event:[%+v]", block)
 				err1 := srv.Send(&pb.DeliverResponse{
 					Type: &pb.DeliverResponse_Block{
 						Block: block,
@@ -205,7 +205,7 @@ func (s *MockDeliverServer) handleFilteredEvents(srv pb.Deliver_DeliverServer, d
 		select {
 		case filteredBlock, ok := <-s.filteredDeliveries:
 			if ok {
-				//test.Logf("handling filteredBlock event: [%+v], blockNumber: %i", filteredBlock, filteredBlock.Number)
+				// test.Logf("handling filteredBlock event: [%+v], blockNumber: %i", filteredBlock, filteredBlock.Number)
 				err1 := srv.Send(&pb.DeliverResponse{
 					Type: &pb.DeliverResponse_FilteredBlock{
 						FilteredBlock: filteredBlock,

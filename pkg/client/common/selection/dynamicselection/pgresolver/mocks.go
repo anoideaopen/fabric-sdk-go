@@ -7,10 +7,10 @@ SPDX-License-Identifier: Apache-2.0
 package pgresolver
 
 import (
-	"github.com/golang/protobuf/proto"
-	common "github.com/hyperledger/fabric-protos-go/common"
-	mb "github.com/hyperledger/fabric-protos-go/msp"
+	common "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	mb "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 // NewPrincipal creates a new MSPPrincipal

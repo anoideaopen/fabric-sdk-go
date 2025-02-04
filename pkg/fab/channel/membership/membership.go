@@ -12,14 +12,14 @@ import (
 
 	"strings"
 
-	"github.com/golang/protobuf/proto"
-	mb "github.com/hyperledger/fabric-protos-go/msp"
+	mb "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/common/verifier"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/logging"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/core"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 var logger = logging.NewLogger("fabsdk/fab")
@@ -129,7 +129,7 @@ func createMSPManager(ctx Context, cfg fab.ChannelCfg) (msp.MSPManager, []string
 		}
 	}
 
-	//To make sure tls cert pool is updated in advance with all the new certs being added,
+	// To make sure tls cert pool is updated in advance with all the new certs being added,
 	// to avoid delay in first endorsement connection with new peer
 	_, err := ctx.EndpointConfig.TLSCACertPool().Get()
 	if err != nil {
@@ -214,7 +214,7 @@ func getFabricConfig(config *mb.MSPConfig) (*mb.FabricMSPConfig, error) {
 	return fabricConfig, nil
 }
 
-//addCertsToConfig adds cert bytes to config TLSCACertPool
+// addCertsToConfig adds cert bytes to config TLSCACertPool
 func addCertsToConfig(config fab.EndpointConfig, pemCertsList [][]byte) {
 
 	if len(pemCertsList) == 0 {

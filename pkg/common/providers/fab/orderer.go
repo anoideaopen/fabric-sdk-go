@@ -9,7 +9,7 @@ package fab
 import (
 	reqContext "context"
 
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 )
 
 // Orderer The Orderer class represents a peer in the target blockchain network to which

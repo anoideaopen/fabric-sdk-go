@@ -11,7 +11,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
@@ -21,6 +20,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 	"github.com/hyperledger/fabric-sdk-go/test/integration"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestLedgerClientQueries(t *testing.T) {
@@ -29,7 +29,7 @@ func TestLedgerClientQueries(t *testing.T) {
 	sdk := mainSDK
 	testSetup := mainTestSetup
 
-	//prepare contexts
+	// prepare contexts
 	org1AdminChannelContext := sdk.ChannelContext(testSetup.ChannelID, fabsdk.WithUser(org1AdminUser), fabsdk.WithOrg(org1Name))
 
 	// Ledger client
@@ -47,7 +47,7 @@ func TestLedgerClientQueries(t *testing.T) {
 
 	// Same query with target
 	target := testSetup.Targets[0]
-	//ledgerInfoFromTarget, err := client.QueryInfo(ledger.WithTargetEndpoints(target))
+	// ledgerInfoFromTarget, err := client.QueryInfo(ledger.WithTargetEndpoints(target))
 	ledgerInfoFromTarget, err := retry.NewInvoker(retry.New(retry.TestRetryOpts)).Invoke(
 		func() (interface{}, error) {
 			response, e := client.QueryInfo(ledger.WithTargetEndpoints(target))
@@ -134,7 +134,7 @@ func TestNoLedgerEndpoints(t *testing.T) {
 	testSetup := mainTestSetup
 
 	configProvider := config.FromFile(integration.GetConfigPath("config_test_endpoints.yaml"))
-	//Add entity matchers if local test
+	// Add entity matchers if local test
 	if integration.IsLocal() {
 		configProvider = integration.AddLocalEntityMapping(configProvider)
 	}
@@ -145,7 +145,7 @@ func TestNoLedgerEndpoints(t *testing.T) {
 	}
 	defer sdk.Close()
 
-	//prepare contexts
+	// prepare contexts
 	org1AdminChannelContext := sdk.ChannelContext(testSetup.ChannelID, fabsdk.WithUser(org1AdminUser), fabsdk.WithOrg(org1Name))
 
 	// Ledger client

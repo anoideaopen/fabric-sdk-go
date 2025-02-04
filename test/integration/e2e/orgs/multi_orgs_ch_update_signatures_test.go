@@ -1,3 +1,4 @@
+//go:build !prev
 // +build !prev
 
 /*
@@ -20,12 +21,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-config/protolator"
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/keyutil"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/protobuf/proto"
 
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/utils"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
@@ -125,8 +126,8 @@ func e2eModifyChannel(t *testing.T, ordererClCtx *dsClientCtx, org1ClCtx *dsClie
 		t.Fatalf("DeepMarshalJSON returned error: %s", err)
 	}
 	proposedChannelConfigJSON := buf.String()
-	//t.Log("------ proposed config ------\n")
-	//t.Log(proposedChannelConfigJSON)
+	// t.Log("------ proposed config ------\n")
+	// t.Log(proposedChannelConfigJSON)
 
 	// orderer calculates and signs config update tx
 	signedConfigOrderer, err := signConfigUpdate(t, ordererClCtx, channelID, proposedChannelConfigJSON)
@@ -341,19 +342,19 @@ func generateSignatures(t *testing.T, org1ClCtx, org2ClCtx *dsClientCtx, chConfi
 
 	// create org1 ConfigSignature
 	chCfgSigs.org1DsChannelCfgSig = executeSigning(t, org1ClCtx, chConfigPath, adminUser, sigDir, isSDKSigning)
-	//t.Logf("org1DsChannelCfgSig:[%+v]", chCfgSigs.org1DsChannelCfgSig)
+	// t.Logf("org1DsChannelCfgSig:[%+v]", chCfgSigs.org1DsChannelCfgSig)
 
 	// create org2 ConfigSignature
 	chCfgSigs.org2DsChannelCfgSig = executeSigning(t, org2ClCtx, chConfigPath, adminUser, sigDir, isSDKSigning)
-	//t.Logf("org2DsChannelCfgSig:[%+v]", chCfgSigs.org2DsChannelCfgSig)
+	// t.Logf("org2DsChannelCfgSig:[%+v]", chCfgSigs.org2DsChannelCfgSig)
 
 	// create signature for anchor peer of org1
 	chCfgSigs.org1MSPDsChannelCfgSig = executeSigning(t, org1ClCtx, chConfigOrg1MSPPath, adminUser, sigDir, isSDKSigning)
-	//t.Logf("org1MSPDsChannelCfgSig:[%+v]", chCfgSigs.org1MSPDsChannelCfgSig)
+	// t.Logf("org1MSPDsChannelCfgSig:[%+v]", chCfgSigs.org1MSPDsChannelCfgSig)
 
 	// create signature for anchor peer of org2
 	chCfgSigs.org2MSPDsChannelCfgSig = executeSigning(t, org2ClCtx, chConfigOrg2MSPPath, adminUser, sigDir, isSDKSigning)
-	//t.Logf("org2MSPDsChannelCfgSig:[%+v]", chCfgSigs.org2MSPDsChannelCfgSig)
+	// t.Logf("org2MSPDsChannelCfgSig:[%+v]", chCfgSigs.org2MSPDsChannelCfgSig)
 
 	return *chCfgSigs
 }
@@ -469,7 +470,7 @@ func createDSClientCtx(t *testing.T, org string) *dsClientCtx {
 	var err error
 	b := getCustomConfigBackend(t, org)
 	if integration.IsLocal() {
-		//If it is a local test then add entity mapping to config backend to parse URLs
+		// If it is a local test then add entity mapping to config backend to parse URLs
 		b = integration.AddLocalEntityMapping(b)
 	}
 
@@ -525,7 +526,7 @@ func getCustomConfigBackend(t *testing.T, org string) core.ConfigProvider {
 }
 
 func getOrgBackendsOverride(backend ...core.ConfigBackend) *mocks.MockConfigBackend {
-	//Create dschannelsdk and dschannelext channels
+	// Create dschannelsdk and dschannelext channels
 	networkConfig := endpointConfigEntity{}
 
 	err := lookup.New(backend...).UnmarshalKey("channels", &networkConfig.Channels)
@@ -561,7 +562,7 @@ func getCustomBackend(backend ...core.ConfigBackend) *mocks.MockConfigBackend {
 }
 
 func testQueryingOrgs(t *testing.T, org1sdk *fabsdk.FabricSDK, org2sdk *fabsdk.FabricSDK, dsChannel, examplecc string) {
-	//prepare context
+	// prepare context
 	org1ChannelClientContext := org1sdk.ChannelContext(dsChannel, fabsdk.WithUser(user1), fabsdk.WithOrg(org1))
 	org2ChannelClientContext := org2sdk.ChannelContext(dsChannel, fabsdk.WithUser(user1), fabsdk.WithOrg(org2))
 
@@ -585,7 +586,7 @@ func testQueryingOrgs(t *testing.T, org1sdk *fabsdk.FabricSDK, org2sdk *fabsdk.F
 
 	foundOrg2Endorser := false
 	for _, v := range resp.Responses {
-		//check if response endorser is org2 peer and MSP ID 'Org2MSP' is found
+		// check if response endorser is org2 peer and MSP ID 'Org2MSP' is found
 		if strings.Contains(string(v.Endorsement.Endorser), "Org2MSP") {
 			foundOrg2Endorser = true
 			break
@@ -594,13 +595,13 @@ func testQueryingOrgs(t *testing.T, org1sdk *fabsdk.FabricSDK, org2sdk *fabsdk.F
 
 	require.True(t, foundOrg2Endorser, "Org2 MSP ID was not in the endorsement")
 
-	//query org2
+	// query org2
 	resp, err = chClientOrg2User.Query(req, channel.WithRetry(retry.DefaultChannelOpts))
 	require.NoError(t, err, "query funds failed")
 
 	foundOrg1Endorser := false
 	for _, v := range resp.Responses {
-		//check if response endorser is org1 peer and MSP ID 'Org1MSP' is found
+		// check if response endorser is org1 peer and MSP ID 'Org1MSP' is found
 		if strings.Contains(string(v.Endorsement.Endorser), "Org1MSP") {
 			foundOrg1Endorser = true
 			break
@@ -670,7 +671,7 @@ func generateExternalChConfigSignature(t *testing.T, org, user, chConfigPath, si
 	_, err := cmd.Output()
 	assert.NoError(t, err, "Failed to create external signature for [%s, %s, %s], script error: [%s]", org, user, chCfgName, stderr.String())
 
-	//t.Logf("running generate_signature.sh script output: %s", b)
+	// t.Logf("running generate_signature.sh script output: %s", b)
 }
 
 func loadExternalSignature(t *testing.T, org, chConfigPath, user, sigDir string) *common.ConfigSignature {
@@ -679,7 +680,7 @@ func loadExternalSignature(t *testing.T, org, chConfigPath, user, sigDir string)
 	fName := filepath.Join(sigDir, fmt.Sprintf("%s_%s_%s_sbytes.txt.sha256", chCfgName, org, user))
 	sig, err := ioutil.ReadFile(fName)
 	require.NoError(t, err, "Failed to read signature data with ioutil.ReadFile()")
-	//t.Logf("Signature bytes read for %s, %s, %s: '%s'", org, chCfgName, user, sig)
+	// t.Logf("Signature bytes read for %s, %s, %s: '%s'", org, chCfgName, user, sig)
 
 	fName = filepath.Join(sigDir, fmt.Sprintf("%s_%s_%s_sHeaderbytes.txt", chCfgName, org, user))
 	sigHeader, err := ioutil.ReadFile(fName)
@@ -703,7 +704,7 @@ func loadExternalSignature(t *testing.T, org, chConfigPath, user, sigDir string)
 	return cs
 }
 
-//endpointConfigEntity contains endpoint config elements needed by endpointconfig
+// endpointConfigEntity contains endpoint config elements needed by endpointconfig
 type endpointConfigEntity struct {
 	Channels map[string]fabImpl.ChannelEndpointConfig
 }

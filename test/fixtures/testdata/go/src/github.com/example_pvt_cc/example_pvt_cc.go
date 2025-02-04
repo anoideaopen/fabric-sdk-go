@@ -13,7 +13,7 @@ import (
 	"strings"
 
 	"github.com/hyperledger/fabric-chaincode-go/shim"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 )
 
 type invokeFunc func(stub shim.ChaincodeStubInterface, args []string) pb.Response

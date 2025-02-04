@@ -21,7 +21,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/events/deliverclient/seek"
 	"github.com/hyperledger/fabric-sdk-go/test/integration"
 )
@@ -270,39 +270,39 @@ func TestMultipleEventsBySeekTypes(t *testing.T) {
 	chaincodeID := mainChaincodeID
 	testSetup := mainTestSetup
 
-	//Run with seek type default and test behaviour
-	//If seek type is default, then event dispatcher uses first block only for block height calculations, it doesn't publish anything
-	//to event channel, and first event we get from event channel actually belongs to first transaction after registration.
+	// Run with seek type default and test behaviour
+	// If seek type is default, then event dispatcher uses first block only for block height calculations, it doesn't publish anything
+	// to event channel, and first event we get from event channel actually belongs to first transaction after registration.
 	var txIDMatched bool
 	for i := 0; i < 4; i++ {
 		txIDMatched = testSeekTypeDefault(t, testSetup, chaincodeID)
-		//In case of seektype DEFAULT, txID from event always match with transaction happened after event registration
+		// In case of seektype DEFAULT, txID from event always match with transaction happened after event registration
 		require.True(t, txIDMatched, "TxID from one of the event didn't match with test transaction TxID")
 	}
 
-	//Run with seek type newest and test behaviour
-	//If seek type is newest then the first event we get from event channel is not related to the first transaction happened after registration, it is
-	//actually latest block from the chain. So TxID from event will not always match with TxID from test transaction
+	// Run with seek type newest and test behaviour
+	// If seek type is newest then the first event we get from event channel is not related to the first transaction happened after registration, it is
+	// actually latest block from the chain. So TxID from event will not always match with TxID from test transaction
 	txIDMatched = true
 	for i := 0; i < 4; i++ {
 		txIDMatched = txIDMatched && testSeekTypeNewest(t, testSetup, chaincodeID)
 	}
-	//In case of seektype NEWEST, txID from event will not always match with transaction happened after event registration
+	// In case of seektype NEWEST, txID from event will not always match with transaction happened after event registration
 	require.False(t, txIDMatched, "TxID from each event matched with TxID of transaction after each registration, which isn't conventional seektype NEWEST behavior")
 }
 
 func testSeekTypeDefault(t *testing.T, testSetup *integration.BaseSetupImpl, chaincodeID string) bool {
-	//create new sdk
+	// create new sdk
 	sdk, err := fabsdk.New(integration.ConfigBackend)
 	require.NoError(t, err, "failed to get new sdk instance")
 	defer sdk.Close()
 
-	//create new channel context
+	// create new channel context
 	chContextProvider := sdk.ChannelContext(testSetup.ChannelID, fabsdk.WithUser(org1User), fabsdk.WithOrg(org1Name))
 	chContext, err := chContextProvider()
 	require.NoError(t, err, "error getting channel context")
 
-	//create new event service with default opts
+	// create new event service with default opts
 	eventService, err := chContext.ChannelService().EventService()
 	require.NoError(t, err, "error getting event service")
 
@@ -310,17 +310,17 @@ func testSeekTypeDefault(t *testing.T, testSetup *integration.BaseSetupImpl, cha
 }
 
 func testSeekTypeNewest(t *testing.T, testSetup *integration.BaseSetupImpl, chaincodeID string) bool {
-	//create new sdk
+	// create new sdk
 	sdk, err := fabsdk.New(integration.ConfigBackend)
 	require.NoError(t, err, "failed to get new sdk instance")
 	defer sdk.Close()
 
-	//create new channel context
+	// create new channel context
 	chContextProvider := sdk.ChannelContext(testSetup.ChannelID, fabsdk.WithUser(org1User), fabsdk.WithOrg(org1Name))
 	chContext, err := chContextProvider()
 	require.NoError(t, err, "error getting channel context")
 
-	//create new event service with deliver client opts
+	// create new event service with deliver client opts
 	eventService, err := chContext.ChannelService().EventService(deliverclient.WithSeekType(seek.Newest))
 	require.NoError(t, err, "error getting event service")
 
@@ -329,12 +329,12 @@ func testSeekTypeNewest(t *testing.T, testSetup *integration.BaseSetupImpl, chai
 
 func testChannelEventsSeekOptions(t *testing.T, testSetup *integration.BaseSetupImpl, sdk *fabsdk.FabricSDK, chainCodeID string, blockEvents bool, eventService fab.EventService, seekType seek.Type) bool {
 
-	//get transactor
+	// get transactor
 	_, cancel, transactor, err := getTransactor(sdk, testSetup.ChannelID, "Admin", testSetup.OrgID)
 	require.NoError(t, err, "Failed to get channel transactor")
 	defer cancel()
 
-	//register chanicode event
+	// register chanicode event
 	ccreg, cceventch, err := eventService.RegisterChaincodeEvent(chainCodeID, ".*")
 	require.NoError(t, err, "Error registering for filtered block events")
 	defer eventService.Unregister(ccreg)
@@ -373,8 +373,8 @@ func testChannelEventsSeekOptions(t *testing.T, testSetup *integration.BaseSetup
 	return txID == event.TxID
 }
 
-//TestEventClientWithMVCCReadConflicts tests behavior of chaincode events when MVCC_READ_CONFLICT happens
-//Chaincode events with Txn Validation Code = MVCC_READ_CONFLICT are not getting published
+// TestEventClientWithMVCCReadConflicts tests behavior of chaincode events when MVCC_READ_CONFLICT happens
+// Chaincode events with Txn Validation Code = MVCC_READ_CONFLICT are not getting published
 func TestEventClientWithMVCCReadConflicts(t *testing.T) {
 	chainCodeID := mainChaincodeID
 	sdk := mainSDK

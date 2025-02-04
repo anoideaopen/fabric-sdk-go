@@ -17,10 +17,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	m "github.com/hyperledger/fabric-protos-go/msp"
+	m "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	bccsp "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/cryptosuitebridge"
 	errors "github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 func (msp *bccspmsp) getCertifiersIdentifier(certRaw []byte) ([]byte, error) {

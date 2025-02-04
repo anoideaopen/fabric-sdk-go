@@ -12,7 +12,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/util/test"
 	"github.com/pkg/errors"
@@ -91,7 +91,7 @@ func delivery(o *MockOrderer) {
 			value, ok := <-s.DeliveryQueue
 			if !ok {
 				close(s.Deliveries)
-				//close(s.DeliveryErrors)
+				// close(s.DeliveryErrors)
 				break
 			}
 			switch value := value.(type) {

@@ -14,11 +14,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/protobuf/proto"
 
 	txnmocks "github.com/hyperledger/fabric-sdk-go/pkg/client/common/mocks"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
@@ -488,7 +488,7 @@ func TestMergeInvocationChains(t *testing.T) {
 	})
 }
 
-//prepareHandlerContexts prepares context objects for handlers
+// prepareHandlerContexts prepares context objects for handlers
 func prepareRequestContext(request Request, opts Opts, t *testing.T) *RequestContext {
 	requestContext := &RequestContext{Request: request,
 		Opts:     opts,

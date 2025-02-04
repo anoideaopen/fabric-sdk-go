@@ -11,11 +11,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/pkg/errors"
-	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/testdata"
-
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
@@ -24,11 +20,13 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr"
 	"github.com/hyperledger/fabric-sdk-go/pkg/util/pathvar"
-	"github.com/stretchr/testify/require"
-
 	"github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/common/policydsl"
 	"github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/core/common/ccprovider"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/pkg/errors"
+	"github.com/stretchr/testify/require"
+	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/testdata"
+	"google.golang.org/protobuf/proto"
 )
 
 const (
@@ -67,7 +65,7 @@ func BenchmarkCallExecuteTx(b *testing.B) {
 		_, err := chClient.Execute(chRq)
 		require.NoError(b, err, "expected no error for valid channel client Execute invoke")
 
-		//b.Logf("Execute Responses: %s", resp.Responses)
+		// b.Logf("Execute Responses: %s", resp.Responses)
 	}
 }
 
@@ -81,7 +79,7 @@ func BenchmarkCallQuery(b *testing.B) {
 		_, err := chClient.Query(chRq)
 		require.NoError(b, err, "expected no error for valid channel client Query invoke")
 
-		//b.Logf("Query Responses: %s", resp.Responses)
+		// b.Logf("Query Responses: %s", resp.Responses)
 	}
 }
 
@@ -97,7 +95,7 @@ func BenchmarkCallExecuteTxParallel(b *testing.B) {
 			_, err := chClient.Execute(chRq)
 			require.NoError(b, err, "expected no error for valid channel client parallel Execute invoke")
 
-			//b.Logf("Execute Responses: %s", resp.Responses)
+			// b.Logf("Execute Responses: %s", resp.Responses)
 		}
 	})
 }
@@ -114,7 +112,7 @@ func BenchmarkCallQueryTxParallel(b *testing.B) {
 			_, err := chClient.Query(chRq)
 			require.NoError(b, err, "expected no error for valid channel client parallel Query invoke")
 
-			//b.Logf("Execute Responses: %s", resp.Responses)
+			// b.Logf("Execute Responses: %s", resp.Responses)
 		}
 	})
 }

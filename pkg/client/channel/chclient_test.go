@@ -15,8 +15,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/hyperledger/fabric-protos-go/common"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke"
 	txnmocks "github.com/hyperledger/fabric-sdk-go/pkg/client/common/mocks"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/staticselection"
@@ -273,7 +273,7 @@ func (h *customEndorsementHandler) Handle(requestContext *invoke.RequestContext,
 		requestContext.Response.Payload = transactionProposalResponses[0].ProposalResponse.GetResponse().Payload
 	}
 
-	//Delegate to next step if any
+	// Delegate to next step if any
 	if h.next != nil {
 		h.next.Handle(requestContext, clientContext)
 	}

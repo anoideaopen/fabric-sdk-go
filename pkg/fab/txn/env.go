@@ -11,12 +11,12 @@ import (
 	"hash"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/golang/protobuf/ptypes"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/hyperledger/fabric-protos-go/common"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/crypto"
 	contextApi "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
@@ -153,11 +153,7 @@ func CreateChannelHeader(headerType common.HeaderType, opts ChannelHeaderOpts) (
 		opts.Timestamp = time.Now()
 	}
 
-	ts, err := ptypes.TimestampProto(opts.Timestamp)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to create timestamp in channel header")
-	}
-	channelHeader.Timestamp = ts
+	channelHeader.Timestamp = timestamppb.New(opts.Timestamp)
 
 	if opts.ChaincodeID != "" {
 		ccID := &pb.ChaincodeID{
@@ -176,7 +172,7 @@ func CreateChannelHeader(headerType common.HeaderType, opts ChannelHeaderOpts) (
 }
 
 // createHeader creates a Header from a ChannelHeader.
-func createHeader(th *TransactionHeader, channelHeader *common.ChannelHeader) (*common.Header, error) { //nolint
+func createHeader(th *TransactionHeader, channelHeader *common.ChannelHeader) (*common.Header, error) { // nolint
 
 	signatureHeader := &common.SignatureHeader{
 		Creator: th.creator,

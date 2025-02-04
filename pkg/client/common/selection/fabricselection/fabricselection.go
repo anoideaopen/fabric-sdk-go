@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	discclient "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/discovery/client"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/common/random"
 	soptions "github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options"
@@ -390,13 +390,13 @@ func newDiscoveryError(err error) DiscoveryError {
 	return DiscoveryError{err}
 }
 
-//IsTransient checks if error is about peer being unable to ding chaincode or endorsement combination wasn't satisfied
+// IsTransient checks if error is about peer being unable to ding chaincode or endorsement combination wasn't satisfied
 func (e DiscoveryError) IsTransient() bool {
 	return strings.Contains(e.Error(), "failed constructing descriptor for chaincodes") ||
 		strings.Contains(e.Error(), "no endorsement combination can be satisfied")
 }
 
-//IsAccessDenied checks if response contains access denied msg
+// IsAccessDenied checks if response contains access denied msg
 func (e DiscoveryError) IsAccessDenied() bool {
 	return strings.Contains(e.Error(), AccessDenied)
 }

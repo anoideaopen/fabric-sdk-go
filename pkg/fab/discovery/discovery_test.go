@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hyperledger/fabric-protos-go/discovery"
+	"github.com/hyperledger/fabric-protos-go-apiv2/discovery"
 	discclient "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/discovery/client"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/comm"
@@ -71,9 +71,9 @@ func TestDiscoveryClient(t *testing.T) {
 
 	}
 
-	//we check that only 2 responses have err
+	// we check that only 2 responses have err
 	assert.Len(t, responsesWithErr, 2)
-	//only single successful response
+	// only single successful response
 	assert.Len(t, successfulResponses, 1)
 
 	response := successfulResponses[0]

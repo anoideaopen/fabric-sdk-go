@@ -15,11 +15,11 @@ import (
 	"encoding/hex"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/golang/protobuf/ptypes"
-	"github.com/hyperledger/fabric-protos-go/common"
-	"github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // CreateChaincodeProposal creates a proposal from given input.
@@ -85,17 +85,12 @@ func CreateChaincodeProposalWithTxIDNonceAndTransient(txid string, typ common.He
 	// get a more appropriate mechanism to handle it in.
 	var epoch uint64
 
-	timestamp, err := ptypes.TimestampProto(time.Now().UTC())
-	if err != nil {
-		return nil, "", errors.Wrap(err, "error validating Timestamp")
-	}
-
 	hdr := &common.Header{
 		ChannelHeader: MarshalOrPanic(
 			&common.ChannelHeader{
 				Type:      int32(typ),
 				TxId:      txid,
-				Timestamp: timestamp,
+				Timestamp: timestamppb.New(time.Now().UTC()),
 				ChannelId: channelID,
 				Extension: ccHdrExtBytes,
 				Epoch:     epoch,

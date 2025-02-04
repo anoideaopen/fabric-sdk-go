@@ -13,9 +13,9 @@ package policydsl
 import (
 	"sort"
 
-	"github.com/golang/protobuf/proto"
-	cb "github.com/hyperledger/fabric-protos-go/common"
-	mb "github.com/hyperledger/fabric-protos-go/msp"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	mb "github.com/hyperledger/fabric-protos-go-apiv2/msp"
+	"google.golang.org/protobuf/proto"
 )
 
 // AcceptAllPolicy always evaluates to true
@@ -115,7 +115,7 @@ func SignedByMspAdmin(mspId string) *cb.SignaturePolicyEnvelope {
 	return p
 }
 
-//wrapper for generating "any of a given role" type policies
+// wrapper for generating "any of a given role" type policies
 func signedByAnyOfGivenRole(role mb.MSPRole_MSPRoleType, ids []string) *cb.SignaturePolicyEnvelope {
 	return SignedByNOutOfGivenRole(1, role, ids)
 }

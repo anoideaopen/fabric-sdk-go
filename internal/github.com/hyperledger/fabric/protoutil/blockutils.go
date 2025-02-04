@@ -16,9 +16,9 @@ import (
 	"encoding/asn1"
 	"math/big"
 
-	"github.com/golang/protobuf/proto"
-	cb "github.com/hyperledger/fabric-protos-go/common"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 // NewBlock constructs a block with no data and no metadata.

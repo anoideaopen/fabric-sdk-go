@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 	grpcCodes "google.golang.org/grpc/codes"
@@ -255,7 +255,7 @@ func TestEndorserRPCError(t *testing.T) {
 }
 
 func TestChaincodeStatusFromResponse(t *testing.T) {
-	//For error response
+	// For error response
 	response := &pb.ProposalResponse{
 		Response: &pb.Response{Status: 500, Payload: []byte("Unknown function"), Message: "Chaincode error"},
 	}
@@ -267,7 +267,7 @@ func TestChaincodeStatusFromResponse(t *testing.T) {
 	assert.Equal(t, status.ChaincodeStatus, s.Group)
 	assert.Equal(t, []byte("Unknown function"), s.Details[1])
 
-	//For successful response 200
+	// For successful response 200
 	response = &pb.ProposalResponse{
 		Response: &pb.Response{Status: 200, Payload: []byte("TEST"), Message: "Success"},
 	}
@@ -275,7 +275,7 @@ func TestChaincodeStatusFromResponse(t *testing.T) {
 	assert.True(t, ok)
 	assert.Nil(t, err)
 
-	//For successful response 201
+	// For successful response 201
 	response = &pb.ProposalResponse{
 		Response: &pb.Response{Status: 201, Payload: []byte("TEST"), Message: "Success"},
 	}
@@ -283,7 +283,7 @@ func TestChaincodeStatusFromResponse(t *testing.T) {
 	assert.True(t, ok)
 	assert.Nil(t, err)
 
-	//For error response - chaincode name not found (v1)
+	// For error response - chaincode name not found (v1)
 	response = &pb.ProposalResponse{
 		Response: &pb.Response{Status: 500, Payload: []byte("Unknown Description"), Message: "make sure the chaincode uq7q9y7lu7 has been successfully instantiated and try again: getccdata mychannel/uq7q9y7lu7 responded with error: could not find chaincode with name 'uq7q9y7lu7'"},
 	}
@@ -294,7 +294,7 @@ func TestChaincodeStatusFromResponse(t *testing.T) {
 	assert.Equal(t, int32(status.ChaincodeNameNotFound), s.Code)
 	assert.Equal(t, status.EndorserClientStatus, s.Group)
 
-	//For error response - chaincode name not found (v2)
+	// For error response - chaincode name not found (v2)
 	response = &pb.ProposalResponse{
 		Response: &pb.Response{Status: 500, Payload: []byte("Unknown Description"), Message: "make sure the chaincode exampleCC2 has been successfully defined on channel orgchannel and try again: chaincode exampleCC2 not found"},
 	}
@@ -305,7 +305,7 @@ func TestChaincodeStatusFromResponse(t *testing.T) {
 	assert.Equal(t, int32(status.ChaincodeNameNotFound), s.Code)
 	assert.Equal(t, status.EndorserClientStatus, s.Group)
 
-	//For error response - chaincode package not found
+	// For error response - chaincode package not found
 	response = &pb.ProposalResponse{
 		Response: &pb.Response{Status: 500, Payload: []byte("Unknown Description"), Message: "cannot get package for chaincode (vl5knffa37:v0)"},
 	}

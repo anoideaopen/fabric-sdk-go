@@ -10,9 +10,9 @@ import (
 	reqContex "context"
 	"net/http"
 
-	"github.com/golang/protobuf/proto"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
+	"google.golang.org/protobuf/proto"
 )
 
 // MockTransactor provides an implementation of Transactor that exposes all its context.

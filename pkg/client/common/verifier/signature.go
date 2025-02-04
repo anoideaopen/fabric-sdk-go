@@ -11,7 +11,7 @@ import (
 	"crypto/x509"
 	"time"
 
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/logging"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
@@ -63,7 +63,7 @@ func (v *Signature) Match(response []*fab.TransactionProposalResponse) error {
 	return nil
 }
 
-//ValidateCertificateDates used to verify if certificate was expired or not valid until later date
+// ValidateCertificateDates used to verify if certificate was expired or not valid until later date
 func ValidateCertificateDates(cert *x509.Certificate) error {
 	if cert == nil {
 		return nil
@@ -78,7 +78,7 @@ func ValidateCertificateDates(cert *x509.Certificate) error {
 	return nil
 }
 
-//VerifyPeerCertificate verifies raw certs and chain certs for expiry and not yet valid dates
+// VerifyPeerCertificate verifies raw certs and chain certs for expiry and not yet valid dates
 func VerifyPeerCertificate(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
 	for _, chaincert := range rawCerts {
 		cert, err := x509.ParseCertificate(chaincert)

@@ -12,10 +12,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/core/common/ccprovider"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
@@ -113,10 +113,10 @@ func (dp *ccPolicyProvider) queryChaincode(ccID string, ccFcn string, ccArgs [][
 	var queryErrors []string
 	var response []byte
 
-	//prepare channel context
+	// prepare channel context
 	channelContext := dp.getChannelContext()
 
-	//get channel client
+	// get channel client
 	client, err := channel.New(channelContext)
 	if err != nil {
 		return nil, errors.WithMessage(err, "Unable to create channel client")
@@ -183,9 +183,9 @@ func newResolverKey(channelID string, chaincodeIDs ...string) *resolverKey {
 }
 
 func (dp *ccPolicyProvider) getChannelContext() context.ChannelProvider {
-	//Get Channel Context
+	// Get Channel Context
 	return func() (context.Channel, error) {
-		//Get Client Context
+		// Get Client Context
 		clientProvider := func() (context.Client, error) {
 			return dp.context, nil
 		}

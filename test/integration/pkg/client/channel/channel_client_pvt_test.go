@@ -1,3 +1,4 @@
+//go:build !prev
 // +build !prev
 
 /*
@@ -16,7 +17,7 @@ import (
 	"testing"
 	"time"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
 
@@ -332,14 +333,14 @@ func TestChannelClientRollsBackPvtDataIfMvccReadConflict(t *testing.T) {
 		require.Truef(t, len(errs) > 0 && strings.Contains(errs[0].Error(), "MVCC_READ_CONFLICT"), "could not reproduce MVCC_READ_CONFLICT")
 
 		// read current value of private data collection
-		//resp, err := chClient.Query(
+		// resp, err := chClient.Query(
 		//	channel.Request{
 		//		ChaincodeID: ccID,
 		//		Fcn:         "getprivate",
 		//		Args:        [][]byte{[]byte(coll), []byte(key)},
 		//	},
 		//	channel.WithRetry(retry.TestRetryOpts),
-		//)
+		// )
 		resp, err := retry.NewInvoker(retry.New(retry.TestRetryOpts)).Invoke(
 			func() (interface{}, error) {
 				b, e := chClient.Query(
