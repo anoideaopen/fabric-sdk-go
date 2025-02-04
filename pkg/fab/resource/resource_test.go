@@ -16,7 +16,7 @@ import (
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
@@ -295,12 +295,12 @@ func TestGenesisBlockOrderer(t *testing.T) {
 	orderer.EnqueueForSendDeliver(mocks.NewSimpleMockError())
 	orderer.CloseQueue()
 
-	//Call get Genesis block
+	// Call get Genesis block
 	reqCtx, cancel := contextImpl.NewRequest(ctx, contextImpl.WithTimeout(10*time.Second))
 	defer cancel()
 	_, err := GenesisBlockFromOrderer(reqCtx, channelName, orderer)
 
-	//Expecting error
+	// Expecting error
 	if err == nil {
 		t.Fatal("GenesisBlock Test supposed to fail with error")
 	}

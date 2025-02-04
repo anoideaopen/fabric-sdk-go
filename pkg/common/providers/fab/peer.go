@@ -13,7 +13,7 @@ type Peer interface {
 	// MSPID gets the Peer mspID.
 	MSPID() string
 
-	//URL gets the peer address
+	// URL gets the peer address
 	URL() string
 
 	// Properties returns properties of the peer.
@@ -35,7 +35,7 @@ type Property = string
 
 // Following is a well-known list of properties of a peer, although this list may be extended.
 const (
-	// PropertyChaincodes defines the chaincodes that are deployed on the peer. Value type:[]*github.com/hyperledger/fabric-protos-go/gossip.Chaincode
+	// PropertyChaincodes defines the chaincodes that are deployed on the peer. Value type:[]*github.com/hyperledger/fabric-protos-go-apiv2/gossip.Chaincode
 	PropertyChaincodes Property = "Chaincodes"
 	// PropertyLedgerHeight defines the ledger height property. Value type: uint64
 	PropertyLedgerHeight Property = "LedgerHeight"

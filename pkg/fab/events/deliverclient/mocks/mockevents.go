@@ -9,8 +9,8 @@ package mocks
 import (
 	"fmt"
 
-	cb "github.com/hyperledger/fabric-protos-go/common"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/events/deliverclient/connection"
 	servicemocks "github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/mocks"
 )

@@ -9,15 +9,15 @@ package test
 import (
 	"fmt"
 
-	"github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/peer"
 
 	"github.com/pkg/errors"
 
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/protoutil"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/common"
-	"github.com/hyperledger/fabric-protos-go/orderer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/orderer"
+	"google.golang.org/protobuf/proto"
 )
 
 // AddACL adds an ACL config value to channel config

@@ -1,3 +1,4 @@
+//go:build testing
 // +build testing
 
 /*
@@ -9,10 +10,11 @@ SPDX-License-Identifier: Apache-2.0
 package dynamicdiscovery
 
 import (
-	"github.com/hyperledger/fabric-protos-go/gossip"
-	"github.com/pkg/errors"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric-protos-go-apiv2/gossip"
+	"github.com/pkg/errors"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/common/discovery"
 	contextAPI "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
@@ -73,7 +75,7 @@ func TestDiscoveryService(t *testing.T) {
 				derr, ok := errors.Cause(err).(DiscoveryError)
 
 				if ok {
-					//peer1MSP1 or peer1MSP2, depending on request
+					// peer1MSP1 or peer1MSP2, depending on request
 					assert.NotEmpty(t, derr.Target())
 					assert.NotEmpty(t, derr.Error())
 
@@ -284,7 +286,7 @@ func TestDiscoveryServiceWithNewOrgJoined(t *testing.T) {
 
 	time.Sleep(1 * time.Second)
 
-	//one of the peer for MSPID2 should be filtered out since it is not yet being updated by memebership cache (ContainsMSP returns false)
+	// one of the peer for MSPID2 should be filtered out since it is not yet being updated by memebership cache (ContainsMSP returns false)
 	peers, err = service.GetPeers()
 	assert.NoError(t, err)
 	assert.Equalf(t, 1, len(peers), "Expected 1 peer among 2 been discovered, since one of them belong to new org with pending membership update")

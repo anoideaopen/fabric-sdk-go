@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"time"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
@@ -397,7 +397,7 @@ func CommitExampleChaincode(orgs []*OrgContext, channelID, ccID, ccVersion, ccPo
 
 // InitExampleChaincode init the example CC on the given channel
 func InitExampleChaincode(sdk *fabsdk.FabricSDK, channelID, ccID string, orgName string) error {
-	//prepare channel client context using client context
+	// prepare channel client context using client context
 	clientChannelContext := sdk.ChannelContext(channelID, fabsdk.WithUser("User1"), fabsdk.WithOrg(orgName))
 	// Channel client is used to query and execute transactions (Org1 is default org)
 	client, err := channel.New(clientChannelContext)

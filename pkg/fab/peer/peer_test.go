@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
-	"github.com/hyperledger/fabric-protos-go/gossip"
+	"github.com/hyperledger/fabric-protos-go-apiv2/gossip"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab"
 	"github.com/stretchr/testify/require"
@@ -205,7 +205,7 @@ func TestPeerOptions(t *testing.T) {
 			fab.PropertyChaincodes:   chaincodes,
 		},
 	}
-	//from config with grpc
+	// from config with grpc
 	peer, err := New(config, FromPeerConfig(networkPeer))
 	require.NoError(t, err)
 	require.NotNil(t, peer)
@@ -214,13 +214,13 @@ func TestPeerOptions(t *testing.T) {
 	require.Equal(t, true, peer.Properties()[fab.PropertyLeftChannel])
 	require.Equal(t, chaincodes, peer.Properties()[fab.PropertyChaincodes])
 
-	//with peer processor
+	// with peer processor
 	_, err = New(config, WithPeerProcessor(nil))
 	if err == nil {
 		t.Fatal("Expected 'Failed to create new peer WithPeerProcessor ((target is required))")
 	}
 
-	//with peer processor
+	// with peer processor
 	_, err = New(config, WithServerName("server-name"))
 	if err == nil {
 		t.Fatal("Expected 'Failed to create new peer WithServerName ((target is required))")

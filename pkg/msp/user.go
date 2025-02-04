@@ -7,9 +7,9 @@ SPDX-License-Identifier: Apache-2.0
 package msp
 
 import (
-	"github.com/golang/protobuf/proto"
+	"google.golang.org/protobuf/proto"
 
-	pb_msp "github.com/hyperledger/fabric-protos-go/msp"
+	pb_msp "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/core"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
 	"github.com/pkg/errors"

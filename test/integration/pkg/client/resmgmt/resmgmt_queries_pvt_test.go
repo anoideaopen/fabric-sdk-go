@@ -11,7 +11,7 @@ import (
 	"reflect"
 	"testing"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"

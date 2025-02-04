@@ -19,16 +19,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hyperledger/fabric-protos-go/orderer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/orderer"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/util/test"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	"github.com/hyperledger/fabric-sdk-go/test/metadata"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/common"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/policydsl"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
@@ -47,6 +46,7 @@ import (
 	mspmocks "github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
+	"google.golang.org/protobuf/proto"
 )
 
 const (
@@ -160,7 +160,7 @@ func TestJoinChannelWithFilter(t *testing.T) {
 	orderer.CloseQueue()
 	setupCustomOrderer(ctx, orderer)
 
-	//the target filter ( client option) will be set
+	// the target filter ( client option) will be set
 	rc := setupResMgmtClient(t, ctx)
 
 	// Setup target peers
@@ -282,7 +282,7 @@ func TestJoinChannelWithOptsRequiredParameters(t *testing.T) {
 	assert.True(t, ok, "status code should be available")
 	assert.Equal(t, status.NoPeersFound.ToInt32(), s.Code, "code should be no peers found")
 
-	//Some cleanup before further test
+	// Some cleanup before further test
 	orderer = fcmocks.NewMockOrderer("", nil)
 	orderer.EnqueueForSendDeliver(
 		fcmocks.NewSimpleMockBlock(),
@@ -395,7 +395,7 @@ func TestIsChaincodeInstalled(t *testing.T) {
 
 	rc := setupDefaultResMgmtClient(t)
 
-	//prepare sample response
+	// prepare sample response
 	response := new(pb.ChaincodeQueryResponse)
 	chaincodes := make([]*pb.ChaincodeInfo, 1)
 	chaincodes[0] = &pb.ChaincodeInfo{Name: "test-name", Path: "test-path", Version: "test-version"}
@@ -501,7 +501,7 @@ func TestQueryChannels(t *testing.T) {
 
 	rc := setupDefaultResMgmtClient(t)
 
-	//prepare sample response
+	// prepare sample response
 	response := new(pb.ChannelQueryResponse)
 	channels := make([]*pb.ChannelInfo, 1)
 	channels[0] = &pb.ChannelInfo{ChannelId: "test"}
@@ -542,7 +542,7 @@ func TestInstallCCWithOpts(t *testing.T) {
 
 	rc := setupDefaultResMgmtClient(t)
 
-	//prepare sample response
+	// prepare sample response
 	response := new(pb.ChaincodeQueryResponse)
 	chaincodes := make([]*pb.ChaincodeInfo, 1)
 	chaincodes[0] = &pb.ChaincodeInfo{Name: "name", Path: "path", Version: "version"}
@@ -1379,7 +1379,7 @@ func TestSaveChannelWithSignatureOptFromSeparateClients(t *testing.T) {
 	ctx2 := setupTestContext("test", "Org2MSP")
 	ctx2.SetEndpointConfig(mockConfig)
 	cc2 := setupResMgmtClient(t, ctx2)
-	//create a temp Dir
+	// create a temp Dir
 	dirName, err := ioutil.TempDir("", "ConfigSignature")
 	assert.NoError(t, err, "creating temp dir failed")
 
@@ -1532,7 +1532,7 @@ func TestMarshalUnMarshalCfgSignatures(t *testing.T) {
 	r := bufio.NewReader(f)
 
 	b, err := UnmarshalConfigSignature(r)
-	//logger.Warnf("unmarshalledConigSignature: %s", b)
+	// logger.Warnf("unmarshalledConigSignature: %s", b)
 	assert.NoError(t, err, "error unmarshaling signatures")
 	assert.NotNil(t, b, "nil configSignature returned")
 	assert.EqualValues(t, b.SignatureHeader, sig.SignatureHeader, "Marshaled signature did not match the one build from the unmarshaled copy")
@@ -1608,7 +1608,7 @@ func TestGetConfigSignaturesFromIdentities(t *testing.T) {
 
 	signature, err := cc.CreateConfigSignatureFromReader(ctx.SigningIdentity, configReader)
 	assert.NoError(t, err, "CreateSignaturesFromCfgPath failed")
-	//t.Logf("Signature: %s", signature)
+	// t.Logf("Signature: %s", signature)
 	assert.NotNil(t, signature, "signatures must not be empty")
 }
 
@@ -1682,7 +1682,7 @@ func getNoOrdererBackend(backend ...core.ConfigBackend) *mocks.MockConfigBackend
 
 func getInvalidChannelOrdererBackend(backend ...core.ConfigBackend) *mocks.MockConfigBackend {
 
-	//Create an invalid channel
+	// Create an invalid channel
 	channels := make(map[string]fabImpl.ChannelEndpointConfig)
 	mychannel := fabImpl.ChannelEndpointConfig{
 		Orderers: []string{"invalid.orderer.com"},
@@ -1697,7 +1697,7 @@ func getInvalidChannelOrdererBackend(backend ...core.ConfigBackend) *mocks.MockC
 
 func getInvalidOrdererBackend(backend ...core.ConfigBackend) *mocks.MockConfigBackend {
 
-	//Create invalid orderer
+	// Create invalid orderer
 	networkConfig := endpointConfigEntity{}
 	err := lookup.New(backend...).UnmarshalKey("orderers", &networkConfig.Orderers)
 	if err != nil {
@@ -1716,7 +1716,7 @@ func getInvalidOrdererBackend(backend ...core.ConfigBackend) *mocks.MockConfigBa
 
 func getNoEventSourceBackend(backend ...core.ConfigBackend) *mocks.MockConfigBackend {
 
-	//Create no event source channels
+	// Create no event source channels
 	networkConfig := endpointConfigEntity{}
 	err := lookup.New(backend...).UnmarshalKey("channels", &networkConfig.Channels)
 	if err != nil {
@@ -1751,7 +1751,7 @@ oG5kQQIgQAe4OOKYhJdh3f7URaKfGTf492/nmRmtK+ySKjpHSrU=
 -----END CERTIFICATE-----
 `
 
-//endpointConfigEntity contains endpoint config elements needed by endpointconfig
+// endpointConfigEntity contains endpoint config elements needed by endpointconfig
 type endpointConfigEntity struct {
 	Orderers map[string]fabImpl.OrdererConfig
 	Channels map[string]fabImpl.ChannelEndpointConfig

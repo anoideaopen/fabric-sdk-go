@@ -11,11 +11,10 @@ import (
 	"math/rand"
 	"regexp"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/common"
-	mb "github.com/hyperledger/fabric-protos-go/msp"
-	ab "github.com/hyperledger/fabric-protos-go/orderer"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	mb "github.com/hyperledger/fabric-protos-go-apiv2/msp"
+	ab "github.com/hyperledger/fabric-protos-go-apiv2/orderer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	channelConfig "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/channelconfig"
 	imsp "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
@@ -27,6 +26,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/resource"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 var logger = logging.NewLogger("fabsdk/fab")

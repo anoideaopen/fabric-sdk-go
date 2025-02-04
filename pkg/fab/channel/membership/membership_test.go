@@ -25,10 +25,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	mb "github.com/hyperledger/fabric-protos-go/msp"
+	mb "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
+	"google.golang.org/protobuf/proto"
 
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/keyutil"
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config/comm/tls"
@@ -42,7 +42,7 @@ var peerCertToBeRevoked = filepath.Join(metadata.GetProjectPath(), metadata.Cryp
 var newCRL string
 var revokedCert string
 
-//use this one to sign CRL
+// use this one to sign CRL
 var orgTwoCA string
 
 func TestMain(m *testing.M) {
@@ -68,7 +68,7 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-//TestCertSignedWithUnknownAuthority
+// TestCertSignedWithUnknownAuthority
 func TestCertSignedWithUnknownAuthority(t *testing.T) {
 	var err error
 	goodMSPID := "GoodMSP"
@@ -97,7 +97,7 @@ func TestCertSignedWithUnknownAuthority(t *testing.T) {
 
 }
 
-//TestRevokedCertificate
+// TestRevokedCertificate
 func TestRevokedCertificate(t *testing.T) {
 
 	goodMSPID := "GoodMSP"
@@ -114,8 +114,8 @@ func TestRevokedCertificate(t *testing.T) {
 	sID := &mb.SerializedIdentity{Mspid: goodMSPID, IdBytes: []byte(revokedCert)}
 	goodEndorser, err := proto.Marshal(sID)
 	assert.Nil(t, err)
-	//Validation should return en error since created CRL contains
-	//revoked certificate
+	// Validation should return en error since created CRL contains
+	// revoked certificate
 	err = m.Validate(goodEndorser)
 	assert.NotNil(t, err)
 	if !strings.Contains(err.Error(), "The certificate has been revoked") {
@@ -124,7 +124,7 @@ func TestRevokedCertificate(t *testing.T) {
 
 }
 
-//TestExpiredCertificate
+// TestExpiredCertificate
 func TestCertificateDates(t *testing.T) {
 	var err error
 	goodMSPID := "GoodMSP"
@@ -339,7 +339,7 @@ func generateSelfSignedCert(t *testing.T, now time.Time) string {
 	// Generate a self-signed certificate
 	testExtKeyUsage := []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth}
 	testUnknownExtKeyUsage := []asn1.ObjectIdentifier{[]int{1, 2, 3}, []int{2, 59, 1}}
-	//extraExtensionData := []byte("extra extension")
+	// extraExtensionData := []byte("extra extension")
 	commonName := "securekey.com"
 	template := x509.Certificate{
 		SerialNumber: big.NewInt(1),
@@ -441,26 +441,26 @@ func loadCert(path string) (*x509.Certificate, error) {
 
 func revokeCert(certToBeRevoked *x509.Certificate, parentCert *x509.Certificate, parentKey interface{}) ([]byte, error) {
 
-	//Create a revocation record for the user
+	// Create a revocation record for the user
 	clientRevocation := pkix.RevokedCertificate{
 		SerialNumber:   certToBeRevoked.SerialNumber,
 		RevocationTime: time.Now().UTC(),
 	}
 
 	curRevokedCertificates := []pkix.RevokedCertificate{clientRevocation}
-	//Generate new CRL that includes the user's revocation
+	// Generate new CRL that includes the user's revocation
 	newCrlList, err := parentCert.CreateCRL(rand.Reader, parentKey, curRevokedCertificates, time.Now().UTC(), time.Now().UTC().AddDate(20, 0, 0))
 	if err != nil {
 		return nil, err
 	}
 
-	//CRL pem Block
+	// CRL pem Block
 	crlPemBlock := &pem.Block{
 		Type:  "X509 CRL",
 		Bytes: newCrlList,
 	}
 	var crlBuffer bytes.Buffer
-	//Encode it to X509 CRL pem format print it out
+	// Encode it to X509 CRL pem format print it out
 	err = pem.Encode(&crlBuffer, crlPemBlock)
 	if err != nil {
 		return nil, err

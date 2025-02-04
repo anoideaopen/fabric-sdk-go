@@ -17,7 +17,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/test/metadata"
 	"github.com/stretchr/testify/require"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/test/integration"
 	"github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/common/policydsl"
 
@@ -61,7 +61,7 @@ type testSDKFunc func(t *testing.T, sdk *fabsdk.FabricSDK)
 func setupAndRun(t *testing.T, createChannel bool, configOpt core.ConfigProvider, test testSDKFunc, sdkOpts ...fabsdk.Option) {
 
 	if integration.IsLocal() {
-		//If it is a local test then add entity mapping to config backend to parse URLs
+		// If it is a local test then add entity mapping to config backend to parse URLs
 		configOpt = integration.AddLocalEntityMapping(configOpt)
 	}
 
@@ -84,7 +84,7 @@ func setupAndRun(t *testing.T, createChannel bool, configOpt core.ConfigProvider
 }
 
 func e2eTest(t *testing.T, sdk *fabsdk.FabricSDK) {
-	//prepare channel client context using client context
+	// prepare channel client context using client context
 	clientChannelContext := sdk.ChannelContext(channelID, fabsdk.WithUser("User1"), fabsdk.WithOrg(orgName))
 	// Channel client is used to query and execute transactions (Org1 is default org)
 	client, err := channel.New(clientChannelContext)
@@ -100,7 +100,7 @@ func e2eTest(t *testing.T, sdk *fabsdk.FabricSDK) {
 }
 
 func createChannelAndCC(t *testing.T, sdk *fabsdk.FabricSDK) {
-	//clientContext allows creation of transactions using the supplied identity as the credential.
+	// clientContext allows creation of transactions using the supplied identity as the credential.
 	clientContext := sdk.Context(fabsdk.WithUser(orgAdmin), fabsdk.WithOrg(ordererOrgName))
 
 	// Resource management client is responsible for managing channels (create/update channel)
@@ -113,7 +113,7 @@ func createChannelAndCC(t *testing.T, sdk *fabsdk.FabricSDK) {
 	// Create channel
 	createChannel(t, sdk, resMgmtClient)
 
-	//prepare context
+	// prepare context
 	adminContext := sdk.Context(fabsdk.WithUser(orgAdmin), fabsdk.WithOrg(orgName))
 
 	// Org resource management client
@@ -396,7 +396,7 @@ func queryCommittedCC(t *testing.T, orgResMgmt *resmgmt.Client) {
 }
 
 func initCC(t *testing.T, sdk *fabsdk.FabricSDK) {
-	//prepare channel client context using client context
+	// prepare channel client context using client context
 	clientChannelContext := sdk.ChannelContext(channelID, fabsdk.WithUser("User1"), fabsdk.WithOrg(orgName))
 	// Channel client is used to query and execute transactions (Org1 is default org)
 	client, err := channel.New(clientChannelContext)

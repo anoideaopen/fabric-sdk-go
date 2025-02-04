@@ -28,7 +28,7 @@ import (
 	"strconv"
 
 	"github.com/hyperledger/fabric-chaincode-go/shim"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 )
 
 // SimpleChaincode example simple Chaincode implementation
@@ -102,7 +102,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface) pb.Response {
 	return shim.Error("Unknown supported call")
 }
 
-//set sets given key-value in state
+// set sets given key-value in state
 func (t *SimpleChaincode) set(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var err error
 

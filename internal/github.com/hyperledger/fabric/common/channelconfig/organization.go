@@ -13,8 +13,8 @@ package channelconfig
 import (
 	"fmt"
 
-	cb "github.com/hyperledger/fabric-protos-go/common"
-	mspprotos "github.com/hyperledger/fabric-protos-go/msp"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	mspprotos "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/msp"
 	"github.com/pkg/errors"
 )

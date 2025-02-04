@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 package blockfilter
 
 import (
-	cb "github.com/hyperledger/fabric-protos-go/common"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 )
 

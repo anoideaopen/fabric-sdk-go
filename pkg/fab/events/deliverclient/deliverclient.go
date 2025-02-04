@@ -10,7 +10,7 @@ import (
 	"math"
 	"time"
 
-	ab "github.com/hyperledger/fabric-protos-go/orderer"
+	ab "github.com/hyperledger/fabric-protos-go-apiv2/orderer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/logging"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/options"
 	fabcontext "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
@@ -72,10 +72,10 @@ func New(context fabcontext.Client, chConfig fab.ChannelCfg, discoveryService fa
 
 	dispatcher := dispatcher.New(context, chConfig, discoveryWrapper, params.connProvider, opts...)
 
-	//default seek type is `Newest`
+	// default seek type is `Newest`
 	if params.seekType == "" {
 		params.seekType = seek.Newest
-		//discard (do not publish) next BlockEvent/FilteredBlockEvent in dispatcher, since default seek type 'newest' is
+		// discard (do not publish) next BlockEvent/FilteredBlockEvent in dispatcher, since default seek type 'newest' is
 		// only needed for block height calculations
 		dispatcher.UpdateLastBlockInfoOnly()
 	}

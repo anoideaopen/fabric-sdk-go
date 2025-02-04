@@ -13,8 +13,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hyperledger/fabric-protos-go/common"
-	"github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/context"
@@ -71,7 +71,7 @@ func testChaincodeInstallUsingChaincodePath(t *testing.T, sdk *fabsdk.FabricSDK,
 		t.Fatalf("QueryInstalledChaincodes return error: %s", err)
 	}
 	retrieveInstalledCC(chaincodeQueryResponse, chainCodeVersion, t)
-	//Install same chaincode again, should fail
+	// Install same chaincode again, should fail
 	err = installCC(t, reqCtx, chainCodeName, chainCodePath, chainCodeVersion, ccPkg, peers)
 
 	if err == nil {
@@ -121,7 +121,7 @@ func testChaincodeInstallUsingChaincodePackage(t *testing.T, sdk *fabsdk.FabricS
 		t.Fatalf("installCC return error: %s", err)
 	}
 
-	//Install same chaincode again, should fail
+	// Install same chaincode again, should fail
 	err = installCC(t, reqCtx, "install", chainCodePath, chainCodeVersion, ccPkg, peers)
 
 	if err == nil {

@@ -27,8 +27,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	mb "github.com/hyperledger/fabric-protos-go/msp"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	mb "github.com/hyperledger/fabric-protos-go-apiv2/msp"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 
@@ -129,7 +129,7 @@ func TestOrgsEndToEnd(t *testing.T) {
 	// Load specific targets for move funds test
 	loadOrgPeers(t, sdk.Context(fabsdk.WithUser(org1AdminUser), fabsdk.WithOrg(org1)))
 
-	//prepare contexts
+	// prepare contexts
 	mc := multiorgContext{
 		ordererClientContext:   sdk.Context(fabsdk.WithUser(ordererAdminUser), fabsdk.WithOrg(ordererOrgName)),
 		org1AdminClientContext: sdk.Context(fabsdk.WithUser(org1AdminUser), fabsdk.WithOrg(org1)),
@@ -156,10 +156,10 @@ func TestOrgsEndToEnd(t *testing.T) {
 	expectedValue = testWithOrg2(t, expectedValue, mc.ccName, channelID)
 	verifyWithOrg1(t, sdk, expectedValue, mc.ccName, channelID)
 
-	//test multi orgs with SDK config having single config
+	// test multi orgs with SDK config having single config
 	TestMultiOrgWithSingleOrgConfig(t, exampleCC)
 
-	//test Distributed signatures with 2 orgs (1 SDK per org, signature test done by SDK and another one done by OpenSSL)
+	// test Distributed signatures with 2 orgs (1 SDK per org, signature test done by SDK and another one done by OpenSSL)
 	DistributedSignaturesTests(t, exampleCC)
 }
 
@@ -250,8 +250,8 @@ func testWithOrg1(t *testing.T, sdk *fabsdk.FabricSDK, mc *multiorgContext) int 
 		upgradeCC(t, mc, ccPkg, mc.ccName, "1")
 	} else {
 		createCCLifecycle(t, mc, mc.ccName, "1", 2, true, mc.channelID, sdk)
-		//sleep 10s for chaincode cache
-		//time.Sleep(time.Duration(10) * time.Second)
+		// sleep 10s for chaincode cache
+		// time.Sleep(time.Duration(10) * time.Second)
 	}
 
 	// Org2 user moves funds on org2 peer (cc policy fails since both Org1 and Org2 peers should participate)
@@ -288,7 +288,7 @@ func checkLedgerInfo(ledgerClient *ledger.Client, t *testing.T, ledgerInfoBefore
 		t.Fatal("Block size did not increase after transaction")
 	}
 	// Test Query Block by Hash - retrieve current block by number
-	//block, err := ledgerClient.QueryBlock(ledgerInfoAfter.BCI.Height-1, ledger.WithTargets(orgTestPeer0.(fab.Peer), orgTestPeer1.(fab.Peer)), ledger.WithMinTargets(2))
+	// block, err := ledgerClient.QueryBlock(ledgerInfoAfter.BCI.Height-1, ledger.WithTargets(orgTestPeer0.(fab.Peer), orgTestPeer1.(fab.Peer)), ledger.WithMinTargets(2))
 	// invoke QueryBlock in retryable mode to ensure all peers have responded
 	block, err := retry.NewInvoker(retry.New(retry.TestRetryOpts)).Invoke(
 		func() (interface{}, error) {
@@ -338,7 +338,7 @@ func createChannel(org1AdminUser msp.SigningIdentity, org2AdminUser msp.SigningI
 
 	lastConfigBlock = integration.WaitForOrdererConfigUpdate(t, configQueryClient, mc.channelID, true, lastConfigBlock)
 
-	//do the same get ch client and create channel for each anchor peer as well (first for Org1MSP)
+	// do the same get ch client and create channel for each anchor peer as well (first for Org1MSP)
 	chMgmtClient, err = resmgmt.New(mc.org1AdminClientContext)
 	require.NoError(t, err, "failed to get a new channel management client for org1Admin")
 	req = resmgmt.SaveChannelRequest{ChannelID: mc.channelID,
@@ -614,7 +614,7 @@ func testWithOrg2(t *testing.T, expectedValue int, ccName, channelID string) int
 	}
 	defer sdk.Close()
 
-	//prepare contexts
+	// prepare contexts
 	org2ChannelClientContext := sdk.ChannelContext(channelID, fabsdk.WithUser(org2User), fabsdk.WithOrg(org2))
 
 	// Create new client that will use dynamic selection
@@ -635,7 +635,7 @@ func testWithOrg2(t *testing.T, expectedValue int, ccName, channelID string) int
 }
 
 func verifyWithOrg1(t *testing.T, sdk *fabsdk.FabricSDK, expectedValue int, ccName string, channelID string) {
-	//prepare context
+	// prepare context
 	org1ChannelClientContext := sdk.ChannelContext(channelID, fabsdk.WithUser(org1User), fabsdk.WithOrg(org1))
 
 	// Org1 user connects to 'orgchannel'
@@ -1043,7 +1043,7 @@ func queryCommittedCC(t *testing.T, ccName string, channelID string, sequence in
 }
 
 func initCC(t *testing.T, ccName string, upgrade bool, channelID string, sdk *fabsdk.FabricSDK) {
-	//prepare channel client context using client context
+	// prepare channel client context using client context
 	clientChannelContext := sdk.ChannelContext(channelID, fabsdk.WithUser(org1User), fabsdk.WithOrg(org1))
 	// Channel client is used to query and execute transactions (Org1 is default org)
 	client, err := channel.New(clientChannelContext)

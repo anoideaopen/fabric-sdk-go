@@ -20,8 +20,8 @@ import (
 	"google.golang.org/grpc/keepalive"
 	grpcstatus "google.golang.org/grpc/status"
 
-	"github.com/hyperledger/fabric-protos-go/common"
-	ab "github.com/hyperledger/fabric-protos-go/orderer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	ab "github.com/hyperledger/fabric-protos-go-apiv2/orderer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/common/verifier"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/logging"
@@ -76,7 +76,7 @@ func New(config fab.EndpointConfig, opts ...Option) (*Orderer, error) {
 	}
 	grpcOpts = append(grpcOpts, grpc.WithDefaultCallOptions(grpc.WaitForReady(!orderer.failFast)))
 	if endpoint.AttemptSecured(orderer.url, orderer.allowInsecure) {
-		//tls config
+		// tls config
 		tlsConfig, err := comm.TLSConfig(orderer.tlsCACert, orderer.serverName, config)
 		if err != nil {
 			return nil, err
@@ -144,10 +144,10 @@ func FromOrdererConfig(ordererCfg *fab.OrdererConfig) Option {
 		o.tlsCACert = ordererCfg.TLSCACert
 
 		if ordererCfg.GRPCOptions["allow-insecure"] == false {
-			//verify if certificate was expired or not yet valid
+			// verify if certificate was expired or not yet valid
 			err := verifier.ValidateCertificateDates(o.tlsCACert)
 			if err != nil {
-				//log this error
+				// log this error
 				logger.Warn(err)
 			}
 		}

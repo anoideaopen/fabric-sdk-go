@@ -13,7 +13,7 @@ package genesisconfig
 import (
 	"time"
 
-	"github.com/hyperledger/fabric-protos-go/orderer/etcdraft"
+	"github.com/hyperledger/fabric-protos-go-apiv2/orderer/etcdraft"
 )
 
 const (

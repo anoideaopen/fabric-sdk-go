@@ -11,7 +11,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
@@ -71,7 +71,7 @@ func WithTargetFilter(targetFilter fab.TargetFilter) RequestOption {
 }
 
 // WithTimeout encapsulates key value pairs of timeout type, timeout duration to Options
-//if not provided, default timeout configuration from config will be used
+// if not provided, default timeout configuration from config will be used
 func WithTimeout(timeoutType fab.TimeoutType, timeout time.Duration) RequestOption {
 	return func(ctx context.Client, o *requestOptions) error {
 		if o.Timeouts == nil {
@@ -124,7 +124,9 @@ func WithConfigSignatures(signatures ...*common.ConfigSignature) RequestOption {
 }
 
 // withConfigSignature allows to provide a pre defined signature reader for resmgmt client's SaveChannel call
-//  The r reader must provide marshaled ConfigSignature content built using either one of the following calls:
+//
+//	The r reader must provide marshaled ConfigSignature content built using either one of the following calls:
+//
 // * CreateConfigSignature call for a signature created internally by the SDK
 // * CreateConfigSignatureData call with signingBytes used for creating a signature by external tool (ex: Openssl)
 //
@@ -138,7 +140,7 @@ func withConfigSignature(r io.Reader) RequestOption { // nolint
 	}
 }
 
-//WithParentContext encapsulates grpc parent context.
+// WithParentContext encapsulates grpc parent context.
 func WithParentContext(parentContext reqContext.Context) RequestOption {
 	return func(ctx context.Client, o *requestOptions) error {
 		o.ParentContext = parentContext

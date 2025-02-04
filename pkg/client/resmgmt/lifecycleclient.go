@@ -9,8 +9,8 @@ package resmgmt
 import (
 	reqContext "context"
 
-	"github.com/hyperledger/fabric-protos-go/common"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/pkg/errors"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/multi"

@@ -14,8 +14,8 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/golang/protobuf/proto"
-	cb "github.com/hyperledger/fabric-protos-go/common"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	"google.golang.org/protobuf/proto"
 )
 
 // DeserializeGroup deserializes the value for all values in a config group

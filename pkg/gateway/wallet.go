@@ -9,12 +9,12 @@ package gateway
 import (
 	"encoding/json"
 
-	"github.com/golang/protobuf/proto"
-	pb_msp "github.com/hyperledger/fabric-protos-go/msp"
+	pb_msp "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/core"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 type wallet interface {
@@ -32,10 +32,10 @@ type Wallet struct {
 }
 
 // Put an identity into the wallet
-//  Parameters:
-//  label specifies the name to be associated with the identity.
-//  id specifies the identity to store in the wallet.
 //
+//	Parameters:
+//	label specifies the name to be associated with the identity.
+//	id specifies the identity to store in the wallet.
 func (w *Wallet) Put(label string, id Identity) error {
 	content, err := id.toJSON()
 	if err != nil {
@@ -46,11 +46,12 @@ func (w *Wallet) Put(label string, id Identity) error {
 }
 
 // Get an identity from the wallet. The implementation class of the identity object will vary depending on its type.
-//  Parameters:
-//  label specifies the name of the identity in the wallet.
 //
-//  Returns:
-//  The identity object.
+//	Parameters:
+//	label specifies the name of the identity in the wallet.
+//
+//	Returns:
+//	The identity object.
 func (w *Wallet) Get(label string) (Identity, error) {
 	content, err := w.store.Get(label)
 
@@ -83,25 +84,27 @@ func (w *Wallet) Get(label string) (Identity, error) {
 
 // List returns the labels of all identities in the wallet.
 //
-//  Returns:
-//  A list of identity labels in the wallet.
+//	Returns:
+//	A list of identity labels in the wallet.
 func (w *Wallet) List() ([]string, error) {
 	return w.store.List()
 }
 
 // Exists tests whether the wallet contains an identity for the given label.
-//  Parameters:
-//  label specifies the name of the identity in the wallet.
 //
-//  Returns:
-//  True if the named identity is in the wallet.
+//	Parameters:
+//	label specifies the name of the identity in the wallet.
+//
+//	Returns:
+//	True if the named identity is in the wallet.
 func (w *Wallet) Exists(label string) bool {
 	return w.store.Exists(label)
 }
 
 // Remove an identity from the wallet. If the identity does not exist, this method does nothing.
-//  Parameters:
-//  label specifies the name of the identity in the wallet.
+//
+//	Parameters:
+//	label specifies the name of the identity in the wallet.
 func (w *Wallet) Remove(label string) error {
 	return w.store.Remove(label)
 }

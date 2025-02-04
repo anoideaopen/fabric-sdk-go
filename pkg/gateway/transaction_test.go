@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke"
 	txnmocks "github.com/hyperledger/fabric-sdk-go/pkg/client/common/mocks"
 	cpc "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
@@ -200,7 +200,7 @@ func TestSubmitHandlerCommitError(t *testing.T) {
 
 }
 
-//prepareHandlerContexts prepares context objects for handlers
+// prepareHandlerContexts prepares context objects for handlers
 func prepareRequestContext(request invoke.Request, opts invoke.Opts, t *testing.T) *invoke.RequestContext {
 	requestContext := &invoke.RequestContext{Request: request,
 		Opts:     opts,

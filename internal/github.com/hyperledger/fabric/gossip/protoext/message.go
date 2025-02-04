@@ -13,7 +13,7 @@ package protoext
 import (
 	"fmt"
 
-	"github.com/hyperledger/fabric-protos-go/gossip"
+	"github.com/hyperledger/fabric-protos-go-apiv2/gossip"
 )
 
 // IsAliveMsg returns whether this GossipMessage is an AliveMessage

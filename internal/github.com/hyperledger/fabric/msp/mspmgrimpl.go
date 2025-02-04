@@ -11,10 +11,10 @@ Please review third_party pinning scripts and patches for more details.
 package msp
 
 import (
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/msp"
+	"github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	flogging "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/logbridge"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 var mspLogger = flogging.MustGetLogger("msp")

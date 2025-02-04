@@ -14,18 +14,18 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/golang/mock/gomock"
-	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
+	"google.golang.org/protobuf/proto"
 
 	"time"
 
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/multi"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	mock_context "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/context"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/mocks"
 	mspmocks "github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
 )
 
 const (

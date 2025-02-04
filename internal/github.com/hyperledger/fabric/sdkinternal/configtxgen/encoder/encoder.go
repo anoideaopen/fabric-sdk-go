@@ -11,9 +11,8 @@ Please review third_party pinning scripts and patches for more details.
 package encoder
 
 import (
-	"github.com/golang/protobuf/proto"
-	cb "github.com/hyperledger/fabric-protos-go/common"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/channelconfig"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/genesis"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/policies"
@@ -26,6 +25,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/pkg/identity"
 	flogging "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/logbridge"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 const (

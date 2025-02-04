@@ -21,7 +21,7 @@ import (
 	"path/filepath"
 	"regexp"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/core/chaincode/platforms/util"
 	flogging "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/logbridge"
 )
@@ -55,7 +55,7 @@ func (p *Platform) ValidatePath(rawPath string) error {
 		return fmt.Errorf("invalid path: %s", err)
 	}
 
-	//Treat empty scheme as a local filesystem path
+	// Treat empty scheme as a local filesystem path
 	if path.Scheme == "" {
 		pathToCheck, err := filepath.Abs(rawPath)
 		if err != nil {

@@ -13,15 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-/*
-Notice: This file has been modified for Hyperledger Fabric SDK Go usage.
-Please review third_party pinning scripts and patches for more details.
-*/
 
 package ledger
 
 import (
-	"github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
 )
 
 // Ledger captures the methods that are common across the 'PeerLedger', 'OrdererLedger', and 'ValidatedLedger'

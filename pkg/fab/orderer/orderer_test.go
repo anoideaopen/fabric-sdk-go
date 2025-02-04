@@ -19,8 +19,8 @@ import (
 	grpccodes "google.golang.org/grpc/codes"
 
 	"github.com/golang/mock/gomock"
-	"github.com/hyperledger/fabric-protos-go/common"
-	ab "github.com/hyperledger/fabric-protos-go/orderer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	ab "github.com/hyperledger/fabric-protos-go-apiv2/orderer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab"
@@ -525,14 +525,14 @@ func TestForGRPCErrorsWithKeepAliveOpts(t *testing.T) {
 }
 
 func TestNewOrdererFromOrdererName(t *testing.T) {
-	t.Run("run simple FromOrdererName", func(t *testing.T){
+	t.Run("run simple FromOrdererName", func(t *testing.T) {
 		_, err := New(mocks.NewMockEndpointConfig(), FromOrdererName("orderer"))
 		if err != nil {
 			t.Fatalf("Failed to get new orderer from name. Error: %s", err)
 		}
 	})
 
-	t.Run("run FromOrdererName with Ignore orderer in config", func(t *testing.T){
+	t.Run("run FromOrdererName with Ignore orderer in config", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 		mockEndpoingCfg := mockfab.NewMockEndpointConfig(mockCtrl)
@@ -545,7 +545,7 @@ func TestNewOrdererFromOrdererName(t *testing.T) {
 		}
 	})
 
-	t.Run("run FromOrdererName with orderer not found in config", func(t *testing.T){
+	t.Run("run FromOrdererName with orderer not found in config", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 		mockEndpoingCfg := mockfab.NewMockEndpointConfig(mockCtrl)

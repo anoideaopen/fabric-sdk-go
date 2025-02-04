@@ -11,14 +11,14 @@ import (
 	"net"
 	"sync"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/ledger/rwset/kvrwset"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/ledger/rwset/kvrwset"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/rwsetutil"
 	"github.com/hyperledger/fabric-sdk-go/pkg/util/test"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/protobuf/proto"
 )
 
 // MockEndorserServer mock endoreser server to process endorsement proposals

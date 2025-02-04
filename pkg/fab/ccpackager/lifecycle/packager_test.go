@@ -17,7 +17,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/stretchr/testify/require"
 )
 
@@ -64,7 +64,7 @@ func TestNewCCPackageError(t *testing.T) {
 
 		pkgBytes, err := NewCCPackage(desc)
 		require.Error(t, err)
-		require.Contains(t, err.Error(), "'go list' failed with: can't load package: package invalid is not in GOROOT")
+		require.Contains(t, err.Error(), "'go list' failed with: package invalid is not in std")
 		require.Empty(t, pkgBytes)
 	})
 

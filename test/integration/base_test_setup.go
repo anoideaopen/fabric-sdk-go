@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
@@ -85,27 +85,27 @@ func ExampleCCTxRandomSetArgs() [][]byte {
 	return [][]byte{[]byte("set"), []byte(GenerateRandomID()), []byte(GenerateRandomID())}
 }
 
-//ExampleCCTxSetArgs sets the given key value in examplecc
+// ExampleCCTxSetArgs sets the given key value in examplecc
 func ExampleCCTxSetArgs(key, value string) [][]byte {
 	return [][]byte{[]byte("set"), []byte(key), []byte(value)}
 }
 
-//ExampleCCInitArgs returns example cc initialization args
+// ExampleCCInitArgs returns example cc initialization args
 func ExampleCCInitArgs() [][]byte {
 	return initArgs
 }
 
-//ExampleCCInitArgsLc returns example cc initialization args
+// ExampleCCInitArgsLc returns example cc initialization args
 func ExampleCCInitArgsLc() [][]byte {
 	return initArgs[1:]
 }
 
-//ExampleCCUpgradeArgs returns example cc upgrade args
+// ExampleCCUpgradeArgs returns example cc upgrade args
 func ExampleCCUpgradeArgs() [][]byte {
 	return upgradeArgs
 }
 
-//ExampleCCUpgradeArgsLc returns example cc upgrade args
+// ExampleCCUpgradeArgsLc returns example cc upgrade args
 func ExampleCCUpgradeArgsLc() [][]byte {
 	return upgradeArgs[1:]
 }
@@ -137,7 +137,7 @@ func (setup *BaseSetupImpl) Initialize(sdk *fabsdk.FabricSDK) error {
 	var cfgBackends []core.ConfigBackend
 	configBackend, err := sdk.Config()
 	if err != nil {
-		//For some tests SDK may not have backend set, try with config file if backend is missing
+		// For some tests SDK may not have backend set, try with config file if backend is missing
 		cfgBackends, err = ConfigBackend()
 		if err != nil {
 			return errors.Wrapf(err, "failed to get config backend from config: %s", err)
@@ -583,12 +583,12 @@ func isCCInstalled(resMgmt *resmgmt.Client, ccName, ccVersion string, peers []fa
 	return installedOnAllPeers, nil
 }
 
-//GetKeyName creates random key name based on test name
+// GetKeyName creates random key name based on test name
 func GetKeyName(t *testing.T) string {
 	return fmt.Sprintf(keyExp, t.Name(), GenerateRandomID())
 }
 
-//ResetKeys resets given set of keys in example cc to given value
+// ResetKeys resets given set of keys in example cc to given value
 func ResetKeys(t *testing.T, ctx contextAPI.ChannelProvider, chaincodeID, value string, keys ...string) {
 	chClient, err := channel.New(ctx)
 	require.NoError(t, err, "Failed to create new channel client for resetting keys")

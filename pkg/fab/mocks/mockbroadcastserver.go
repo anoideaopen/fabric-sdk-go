@@ -12,14 +12,14 @@ import (
 	"net"
 	"sync"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/common"
-	po "github.com/hyperledger/fabric-protos-go/orderer"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	po "github.com/hyperledger/fabric-protos-go-apiv2/orderer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/mocks"
 	"github.com/hyperledger/fabric-sdk-go/pkg/util/test"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/protobuf/proto"
 )
 
 // TestBlock is a test block

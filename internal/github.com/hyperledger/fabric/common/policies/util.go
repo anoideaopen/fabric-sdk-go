@@ -11,7 +11,7 @@ Please review third_party pinning scripts and patches for more details.
 package policies
 
 import (
-	cb "github.com/hyperledger/fabric-protos-go/common"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/protoutil"
 )
 

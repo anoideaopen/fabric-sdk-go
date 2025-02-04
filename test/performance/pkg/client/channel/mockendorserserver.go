@@ -16,12 +16,11 @@ import (
 	"net"
 	"sync"
 
-	"github.com/golang/protobuf/proto"
-	cb "github.com/hyperledger/fabric-protos-go/common"
-	"github.com/hyperledger/fabric-protos-go/discovery"
-	"github.com/hyperledger/fabric-protos-go/ledger/rwset/kvrwset"
-	"github.com/hyperledger/fabric-protos-go/msp"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/discovery"
+	"github.com/hyperledger/fabric-protos-go-apiv2/ledger/rwset/kvrwset"
+	"github.com/hyperledger/fabric-protos-go-apiv2/msp"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/utils"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	discmocks "github.com/hyperledger/fabric-sdk-go/pkg/fab/discovery/mocks"
@@ -32,6 +31,7 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/protobuf/proto"
 )
 
 // MockEndorserServer mock endorser server to process endorsement proposals
@@ -162,7 +162,7 @@ func (m *MockEndorserServer) SetMockPeer(mPeer *MockPeer) {
 }
 
 func (m *MockEndorserServer) registerDiscoveryAndDeliveryServers(peerAddress string) {
-	//register DiscoverService and DeliveryService
+	// register DiscoverService and DeliveryService
 	discoverServer := discmocks.NewServer(
 		discmocks.WithLocalPeers(
 			&discmocks.MockDiscoveryPeerEndpoint{

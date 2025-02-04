@@ -13,12 +13,12 @@ package channelconfig
 import (
 	"fmt"
 
-	"github.com/golang/protobuf/proto"
-	mspprotos "github.com/hyperledger/fabric-protos-go/msp"
+	mspprotos "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/msp"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/msp/cache"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/core"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 type pendingMSPConfig struct {

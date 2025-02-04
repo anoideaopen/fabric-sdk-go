@@ -20,13 +20,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/common"
-	"github.com/hyperledger/fabric-protos-go/msp"
+	"github.com/hyperledger/fabric-protos-go-apiv2/common"
+	"github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/keyutil"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/protobuf/proto"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
@@ -74,7 +74,7 @@ var CRLTestRetryOpts = retry.Opts{
 
 var msps = []string{"Org1MSP", "Org2MSP"}
 
-//TestPeerRevoke performs peer revoke test
+// TestPeerRevoke performs peer revoke test
 // step 1: generate CRL
 // step 2: update MSP revocation_list in channel config
 // step 3: perform revoke peer test
@@ -109,7 +109,7 @@ func TestPeerAndUserRevoke(t *testing.T) {
 	updateRevocationList(t, nil)
 }
 
-//joinChannelAndInstallCC joins channel and install/instantiate/query 'example_cc_fabtest_e2e_2'
+// joinChannelAndInstallCC joins channel and install/instantiate/query 'example_cc_fabtest_e2e_2'
 func joinChannelAndInstallCC(t *testing.T) {
 	sdk, err := fabsdk.New(config.FromFile(integration.GetConfigPath(configFilename)))
 	require.NoError(t, err)
@@ -132,7 +132,7 @@ func joinChannelAndInstallCC(t *testing.T) {
 
 }
 
-//updateRevocationList update MSP revocation_list in channel config
+// updateRevocationList update MSP revocation_list in channel config
 func updateRevocationList(t *testing.T, crlBytes [][]byte) {
 	sdk, err := fabsdk.New(config.FromFile(integration.GetConfigPath(configFilename)))
 	require.NoError(t, err)
@@ -165,7 +165,7 @@ func updateRevocationList(t *testing.T, crlBytes [][]byte) {
 	updateChannelConfig(t, readSet, writeSet, org1ResMgmt, org1MspClient, org2MspClient)
 }
 
-//waitForConfigUpdate waits for all peer till they are updated with latest channel config
+// waitForConfigUpdate waits for all peer till they are updated with latest channel config
 func waitForConfigUpdate(t *testing.T) {
 
 	sdk, err := fabsdk.New(config.FromFile(integration.GetConfigPath(configFilename)))
@@ -184,7 +184,7 @@ func waitForConfigUpdate(t *testing.T) {
 	require.True(t, ready, "all peers are not updated with latest channel config")
 }
 
-//testRevokedPeer performs revoke peer test
+// testRevokedPeer performs revoke peer test
 func testRevokedPeer(t *testing.T) {
 	sdk1, err := fabsdk.New(config.FromFile(integration.GetConfigPath(configFilename)))
 	require.NoError(t, err)
@@ -211,7 +211,7 @@ func testRevokedPeer(t *testing.T) {
 	queryCC(t, org2UserChannelClientContext, "example_cc_fabtest_e2e_2", false, "signature validation failed")
 }
 
-//testRevokedUser performs revoke peer test
+// testRevokedUser performs revoke peer test
 func testRevokedUser(t *testing.T) {
 	var sdk *fabsdk.FabricSDK
 	var err error
@@ -242,7 +242,7 @@ func testRevokedUser(t *testing.T) {
 	assert.True(t, strings.Contains(err.Error(), "access denied"))
 }
 
-//prepareReadWriteSets prepares read write sets for channel config update
+// prepareReadWriteSets prepares read write sets for channel config update
 func prepareReadWriteSets(t *testing.T, crlBytes [][]byte, ledgerClient *ledger.Client) (*common.ConfigGroup, *common.ConfigGroup) {
 	var readSet, writeSet *common.ConfigGroup
 

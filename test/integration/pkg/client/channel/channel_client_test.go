@@ -15,7 +15,7 @@ import (
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/multi"
 
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -42,13 +42,13 @@ func TestChannelClient(t *testing.T) {
 	bKey := integration.GetKeyName(t)
 	moveOneTx := integration.ExampleCCTxArgs(aKey, bKey, "1")
 
-	//prepare context
+	// prepare context
 	org1ChannelClientContext := sdk.ChannelContext(testSetup.ChannelID, fabsdk.WithUser(org1User), fabsdk.WithOrg(org1Name))
 
-	//Reset example cc keys
+	// Reset example cc keys
 	integration.ResetKeys(t, org1ChannelClientContext, chaincodeID, "200", aKey, bKey)
 
-	//get channel client
+	// get channel client
 	chClient, err := channel.New(org1ChannelClientContext)
 	if err != nil {
 		t.Fatalf("Failed to create new channel client: %s", err)
@@ -91,7 +91,7 @@ func TestChannelClient(t *testing.T) {
 		require.Nil(t, err, "InstallAndInstantiateExampleCC return error")
 	}
 
-	//perform Transaction
+	// perform Transaction
 	testTransaction(t, chClient, chaincodeID, nestedCCID, moveOneTx)
 
 	// Verify transaction
@@ -122,7 +122,7 @@ func TestChannelClient(t *testing.T) {
 
 	testDuplicateTargets(t, chaincodeID, chClient, bKey, moveOneTx)
 
-	//test if CCEvents for chaincode events are in sync when new channel client are created
+	// test if CCEvents for chaincode events are in sync when new channel client are created
 	// for each transaction
 	testMultipleClientChaincodeEventLoop(t, chaincodeID)
 
@@ -501,7 +501,7 @@ func testChaincodeEvent(t *testing.T, chClient *channel.Client, args [][]byte, c
 	}
 }
 
-//TestMultipleEventClient tests if CCEvents for chaincode events are in sync when new channel client are created
+// TestMultipleEventClient tests if CCEvents for chaincode events are in sync when new channel client are created
 // for each transaction
 func testMultipleClientChaincodeEventLoop(t *testing.T, chainCodeID string) {
 
@@ -621,7 +621,7 @@ func TestNoEndpoints(t *testing.T) {
 	configProvider := config.FromFile(integration.GetConfigPath("config_test_endpoints.yaml"))
 
 	if integration.IsLocal() {
-		//If it is a local test then add entity mapping to config backend to parse URLs
+		// If it is a local test then add entity mapping to config backend to parse URLs
 		configProvider = integration.AddLocalEntityMapping(configProvider)
 	}
 

@@ -15,11 +15,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/golang/protobuf/ptypes/timestamp"
-	cb "github.com/hyperledger/fabric-protos-go/common"
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/pkg/identity"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // MarshalOrPanic serializes a protobuf message and panics if this
@@ -111,7 +111,7 @@ func MakeChannelHeader(headerType cb.HeaderType, version int32, chainID string, 
 	return &cb.ChannelHeader{
 		Type:    int32(headerType),
 		Version: version,
-		Timestamp: &timestamp.Timestamp{
+		Timestamp: &timestamppb.Timestamp{
 			Seconds: time.Now().Unix(),
 			Nanos:   0,
 		},

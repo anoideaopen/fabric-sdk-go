@@ -7,10 +7,10 @@ SPDX-License-Identifier: Apache-2.0
 package channel
 
 import (
-	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 // TransactionProposalResponseVerifier struct is for verifying TransactionProposalResponse and matches config blocks

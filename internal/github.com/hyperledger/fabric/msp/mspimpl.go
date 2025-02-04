@@ -17,12 +17,12 @@ import (
 	"encoding/hex"
 	"encoding/pem"
 
-	"github.com/golang/protobuf/proto"
-	m "github.com/hyperledger/fabric-protos-go/msp"
+	m "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/utils"
 	factory "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/cryptosuitebridge"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/core"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 // mspSetupFuncType is the prototype of the setup function

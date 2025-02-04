@@ -10,12 +10,12 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/golang/protobuf/proto"
-	common "github.com/hyperledger/fabric-protos-go/common"
-	mb "github.com/hyperledger/fabric-protos-go/msp"
+	common "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	mb "github.com/hyperledger/fabric-protos-go-apiv2/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/logging"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
 )
 
 const loggerModule = "fabsdk/client"

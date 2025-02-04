@@ -21,9 +21,9 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher"
 	servicemocks "github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/mocks"
 
+	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/blockfilter/headertypefilter"
-	cb "github.com/hyperledger/fabric-protos-go/common"
-	pb "github.com/hyperledger/fabric-protos-go/peer"
 	"github.com/pkg/errors"
 )
 

@@ -14,8 +14,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/hyperledger/fabric-protos-go/gossip"
+	"github.com/hyperledger/fabric-protos-go-apiv2/gossip"
+	"google.golang.org/protobuf/proto"
 )
 
 // Signer signs a message, and returns (signature, nil)

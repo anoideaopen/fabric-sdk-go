@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 package fab
 
 import (
-	pb "github.com/hyperledger/fabric-protos-go/peer"
+	pb "github.com/hyperledger/fabric-protos-go-apiv2/peer"
 )
 
 // TransactionRequest holds endorsed Transaction Proposals.
