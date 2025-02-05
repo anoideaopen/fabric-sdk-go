@@ -8,7 +8,6 @@ package discovery
 
 import (
 	"reflect"
-	"strings"
 
 	discclient "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/discovery/client"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
@@ -27,14 +26,13 @@ func GetProperties(endpoint *discclient.Peer) fab.Properties {
 
 	properties := make(fab.Properties)
 
-	val := reflect.ValueOf(stateInfo.Properties).Elem()
+	val := reflect.Indirect(reflect.ValueOf(stateInfo.Properties))
+	elem := reflect.ValueOf(stateInfo.Properties)
 
-	for i := 0; i < val.NumField(); i++ {
-		fType := val.Type().Field(i)
-
+	for i := 0; i < val.Type().NumField(); i++ {
 		// Exclude protobuf fields
-		if !strings.HasPrefix(fType.Name, "XXX_") {
-			properties[fType.Name] = val.Field(i).Interface()
+		if val.Type().Field(i).IsExported() {
+			properties[val.Type().Field(i).Name] = elem.Elem().Field(i).Interface()
 		}
 	}
 
