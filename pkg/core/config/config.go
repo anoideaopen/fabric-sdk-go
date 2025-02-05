@@ -9,18 +9,19 @@ package config
 import (
 	"bytes"
 	"io"
+	"path/filepath"
 	"strings"
 
-	"github.com/spf13/viper"
-
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/logging"
-	"github.com/pkg/errors"
-
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/core"
+	"github.com/pkg/errors"
+	"github.com/spf13/viper"
 )
 
-var logModules = [...]string{"fabsdk", "fabsdk/client", "fabsdk/core", "fabsdk/fab", "fabsdk/common",
-	"fabsdk/msp", "fabsdk/util", "fabsdk/context"}
+var logModules = [...]string{
+	"fabsdk", "fabsdk/client", "fabsdk/core", "fabsdk/fab", "fabsdk/common",
+	"fabsdk/msp", "fabsdk/util", "fabsdk/context",
+}
 
 type options struct {
 	envPrefix    string
@@ -57,6 +58,12 @@ func FromFile(name string, opts ...Option) core.ConfigProvider {
 
 		// create new viper
 		backend.configViper.SetConfigFile(name)
+
+		ext := filepath.Ext(name)
+
+		if len(ext) > 1 {
+			backend.configViper.SetConfigType(ext[1:])
+		}
 
 		// If a config file is found, read it in.
 		err = backend.configViper.MergeInConfig()
