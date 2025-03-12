@@ -178,7 +178,7 @@ func (c *commitTxHandler) Handle(requestContext *invoke.RequestContext, clientCo
 	start := time.Now()
 	txnID := requestContext.Response.TransactionID
 
-	//Register Tx event
+	// Register Tx event
 	reg, statusNotifier, err := clientContext.EventService.RegisterTxStatusEvent(string(txnID)) // TODO: Change func to use TransactionID instead of string
 	if err != nil {
 		requestContext.Error = errors.Wrap(err, "error registering for TxStatus event")
